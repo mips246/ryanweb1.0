@@ -1,0 +1,129 @@
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+body {
+	font-size: 14px;
+	color:#444;
+}
+a {
+	text-decoration: none;
+}
+.inputstyle {
+	display: block;
+	max-width: 1080px;
+	margin: 0 auto;
+}
+.container {
+	display: block;
+	max-width: 1080px;
+	margin: 0 auto;
+}
+.fl {
+	float:left;
+}
+.fr {
+	float: right;
+}
+.clearf:after,
+.clearf:before {
+	content:" ";
+	display: block;
+	clear: both;
+}
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9 {
+	display: block;
+	position:relatve;
+	min-height: 1px;
+	float:left;
+}
+.col-1 {
+	width:10%;
+}
+.col-2 {
+	width:20%;
+}
+.col-3 {
+	width:30%;
+}
+.col-4 {
+	width:40%;
+}
+.col-5 {
+	width:50%;
+}
+.col-6 {
+	width:60%;
+}
+.col-7 {
+	width:70%;
+}
+.col-8 {
+	width:80%;
+}
+.col-9 {
+	width:90%;
+}
+.top-nav {
+	background: #eee;
+}
+.top-nav .item {
+	display: inline-block;
+	padding: 6px 10px;
+	color: #666;
+}
+.top-nav .item:hover {
+	color: #111;
+}
+.header {
+	 padding: 100px 0;
+}
+.inputstyle .inputbutton {
+	bordrer:2px solid #fd182b;
+}
+.inputstyle .inputbutton input,
+.inputstyle .inputbutton button {
+	display: block;
+	border: 0;
+	padding: 10px;
+}
+.inputstyle .inputbutton input {
+	width: 50%;
+	border-radius:9px;
+}
+.inputstyle .inputbutton button {
+	width: 20%
+}
+.form_input {
+	outline-style: solid;
+	outline-style:thin;
+    outline-width:1px;
+}
+.footer {
+	padding: 300px 0;
+}
+/*
+register.html所需的css样式
+*/
+.register {
+	display: block;
+	padding: 100px;
+	max-width: 720px;
+	margin: 0 auto;
+}
+.font1{
+		color:#666;
+}
+.bule{ 
+	border-color:#9999;
+}
+
