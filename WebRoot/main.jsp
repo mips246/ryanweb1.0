@@ -22,16 +22,7 @@
           <a href="main.jsp"><button type="button" class="btn btn-primary ">首页</button></a>
         </div>
         <div class="item">
-        	
-          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">学习</button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="study1_1.jsp">数字逻辑理论</a>
-            <a class="dropdown-item" href="study1_2.jsp">数字逻辑实验</a>
-            <a class="dropdown-item" href="study2_1.jsp">计算机组成原理理论</a>
-            <a class="dropdown-item" href="study2_2.jsp">计算机组成原理实验</a>
-            <a class="dropdown-item" href="study3_1.jsp">计算机体系结构理论</a>
-            <a class="dropdown-item" href="study3_2.jsp">计算机体系结构实验</a>
-          </div>
+          <a href="study_menu.jsp"><button type="button" class="btn btn-primary" >学习</button></a>
         </div>
         <div class="item">
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">课程资料</button>
@@ -78,5 +69,15 @@
       </div>
     </div>
   </div>
+<% String name=(String)session.getAttribute("userid");
+	if(name!=null){
+%>
+<%
+	}else{
+%>
+<%
+	response.sendRedirect("login.jsp"); 
+%>
+ <%} %>
 </body>
 </html>
