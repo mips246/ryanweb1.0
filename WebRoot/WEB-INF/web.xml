@@ -35,27 +35,40 @@
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
   
-    <filter>
-		<filter-name>LoginFilter</filter-name>
+  <filter>
+	<filter-name>LoginFilter</filter-name>
 		<filter-class>filter.LoginFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>		
-		<url-pattern>/file1.jsp</url-pattern>
-		<url-pattern>/file2.jsp</url-pattern>
-		<url-pattern>/file3.jsp</url-pattern>
-		<url-pattern>/homework1.jsp</url-pattern>
-		<url-pattern>/homework2.jsp</url-pattern>
-		<url-pattern>/homework3.jsp</url-pattern>
-		<url-pattern>/main.jsp</url-pattern>
-		<url-pattern>/study_menu.jsp</url-pattern>
-		<url-pattern>/study1_1.jsp</url-pattern>
-		<url-pattern>/study1_2.jsp</url-pattern>
-		<url-pattern>/study2_1.jsp</url-pattern>
-		<url-pattern>/study2_2.jsp</url-pattern>
-		<url-pattern>/study3_1.jsp</url-pattern>
-		<url-pattern>/study3_2.jsp</url-pattern>
-	</filter-mapping>
+  </filter>
+  <filter>
+  	<filter-name>encoding</filter-name>
+  	<filter-class>filter.EncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>charset</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+	<filter-name>LoginFilter</filter-name>		
+	<url-pattern>/file1.jsp</url-pattern>
+	<url-pattern>/file2.jsp</url-pattern>
+	<url-pattern>/file3.jsp</url-pattern>
+	<url-pattern>/homework1.jsp</url-pattern>
+	<url-pattern>/homework2.jsp</url-pattern>
+	<url-pattern>/homework3.jsp</url-pattern>
+	<url-pattern>/main.jsp</url-pattern>
+	<url-pattern>/study_menu.jsp</url-pattern>
+	<url-pattern>/study1_1.jsp</url-pattern>
+	<url-pattern>/study1_2.jsp</url-pattern>
+	<url-pattern>/study2_1.jsp</url-pattern>
+	<url-pattern>/study2_2.jsp</url-pattern>
+	<url-pattern>/study3_1.jsp</url-pattern>
+	<url-pattern>/study3_2.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>encoding</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 	
   
   <welcome-file-list>
