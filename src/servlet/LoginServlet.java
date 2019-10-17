@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 			try {
 				if(DAOFactory.getIUserDAOInstance().loginCheck(studentuser)) {
 					info.add("µÇÂ½³É¹¦£¬»¶Ó­"+studentuser.getName());
-					flag=true;
+					//flag=true;
 					HttpSession hs=req.getSession();
 					hs.setAttribute("userid", userid);
 				}else {
@@ -43,12 +43,14 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		req.setAttribute("info", info);
+		
 		if(flag==true) {
 			req.getRequestDispatcher(pathtrue).forward(req,resp);
 			//resp.sendRedirect("main.jsp");
 		}else {
 			req.getRequestDispatcher(pathfalse).forward(req,resp);
 		}
+		
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
 		this.doGet(req,resp);

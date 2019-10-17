@@ -69,15 +69,5 @@
       </div>
     </div>
   </div>
-<% String name=(String)session.getAttribute("userid");
-	if(name!=null){
-%>
-<%
-	}else{
-%>
-<%
-	response.sendRedirect("login.jsp"); 
-%>
- <%} %>
 </body>
 </html>

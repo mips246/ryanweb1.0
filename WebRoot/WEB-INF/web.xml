@@ -34,6 +34,30 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
+  
+    <filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>		
+		<url-pattern>/file1.jsp</url-pattern>
+		<url-pattern>/file2.jsp</url-pattern>
+		<url-pattern>/file3.jsp</url-pattern>
+		<url-pattern>/homework1.jsp</url-pattern>
+		<url-pattern>/homework2.jsp</url-pattern>
+		<url-pattern>/homework3.jsp</url-pattern>
+		<url-pattern>/main.jsp</url-pattern>
+		<url-pattern>/study_menu.jsp</url-pattern>
+		<url-pattern>/study1_1.jsp</url-pattern>
+		<url-pattern>/study1_2.jsp</url-pattern>
+		<url-pattern>/study2_1.jsp</url-pattern>
+		<url-pattern>/study2_2.jsp</url-pattern>
+		<url-pattern>/study3_1.jsp</url-pattern>
+		<url-pattern>/study3_2.jsp</url-pattern>
+	</filter-mapping>
+	
+  
   <welcome-file-list>
   	<welcome-file>index.jsp</welcome-file>
     <welcome-file>login.jsp</welcome-file>
