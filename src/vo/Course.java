@@ -5,11 +5,17 @@ import java.util.List;
 
 public class Course {
 	private String coursename;
+	private String coursenumber;
+	public String getCoursenumber() {
+		return coursenumber;
+	}
+	public void setCoursenumber(String coursenumber) {
+		this.coursenumber = coursenumber;
+	}
 	private String teachername;
 	private String teacherid;
 	private int studentcount;
 	private Date createtime;
-	private List<String>userid;
 	public String getCoursename() {
 		return coursename;
 	}
@@ -39,12 +45,6 @@ public class Course {
 	}
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
-	}
-	public List<String> getUserid() {
-		return userid;
-	}
-	public void setUserid(List<String> userid) {
-		this.userid = userid;
 	}
 	
 }

@@ -4,7 +4,6 @@ public class TeacherUser {
 	private String userid;
 	private String name;
 	private String password;
-	private int coursenumber;
 	public String getUserid() {
 		return userid;
 	}
@@ -22,12 +21,6 @@ public class TeacherUser {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public int getCoursenumber() {
-		return coursenumber;
-	}
-	public void setCoursenumber(int coursenumber) {
-		this.coursenumber = coursenumber;
 	}
 	
 }
