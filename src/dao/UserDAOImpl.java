@@ -16,7 +16,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean loginCheck(StudentUser studentuser)throws Exception{
 		boolean flag=false;
 		try {
-			String sql="select name from user where userid=? and password=?";
+			String sql="select name from student where userid=? and password=?";
 			this.pstmt=this.conn.prepareStatement(sql);
 			this.pstmt.setString(1, studentuser.getUserid());//第一个参数是该参数在语句中的索引。参数标记具有从 1 开始的编号。 通常指的是第一个“？”
 														//第二个参数是要对第一个参数设置的值。
