@@ -24,13 +24,14 @@ public class LoginServlet extends HttpServlet {
 		String pathfalse="login.jsp";
 		String userid=req.getParameter("userid");
 		String userpass=req.getParameter("userpass");
-		String usertype=req.getParameter("usertype");
+		String role=req.getParameter("role");
 		boolean flag=false;
 		List<String>info=new ArrayList<String>();
 		if(userid==null||"".equals(userpass)) {
 			info.add("密码不能为空");
 		}
 		if(info.size()==0) {
+			//if(role.equals("student")) {}按照es的架构，这里应该判断role来决定到底初始化哪个类
 			StudentUser studentuser=new StudentUser();
 			studentuser.setUserid(userid);
 			studentuser.setPassword(userpass);
