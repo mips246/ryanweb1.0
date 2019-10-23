@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80016
 File Encoding         : 65001
 
-Date: 2019-10-22 21:20:29
+Date: 2019-10-23 21:01:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,6 +82,38 @@ CREATE TABLE `courseteacher` (
 
 -- ----------------------------
 -- Records of courseteacher
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `homework`
+-- ----------------------------
+DROP TABLE IF EXISTS `homework`;
+CREATE TABLE `homework` (
+  `studentid` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `coursenumber` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `descriptionurl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `homeworkurl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `grade1` int(3) DEFAULT NULL,
+  `grade2` int(3) DEFAULT NULL,
+  `grade3` int(3) DEFAULT NULL,
+  `grade4` int(3) DEFAULT NULL,
+  `grade5` int(3) DEFAULT NULL,
+  `grade6` int(3) DEFAULT NULL,
+  `grade7` int(3) DEFAULT NULL,
+  `grade8` int(3) DEFAULT NULL,
+  `grade9` int(3) DEFAULT NULL,
+  `grade10` int(3) DEFAULT NULL,
+  `grade11` int(3) DEFAULT NULL,
+  `grade12` int(3) DEFAULT NULL,
+  `grade13` int(3) DEFAULT NULL,
+  PRIMARY KEY (`studentid`,`coursenumber`),
+  KEY `course` (`coursenumber`),
+  CONSTRAINT `course` FOREIGN KEY (`coursenumber`) REFERENCES `course` (`coursenumber`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `student` FOREIGN KEY (`studentid`) REFERENCES `student` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of homework
 -- ----------------------------
 
 -- ----------------------------

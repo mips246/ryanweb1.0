@@ -14,7 +14,12 @@ import factory.DAOFactory;
 import vo.StudentUser;
 
 public class LoginServlet extends HttpServlet {
+	
 	public void doGet(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException {
+		req.getRequestDispatcher("/errorpage.jsp").forward(req,resp);
+	}
+	public void doPost(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+		System.out.println("<login,½øÈëloginservlet>");
 		String pathtrue="main.jsp";
 		String pathfalse="login.jsp";
 		String userid=req.getParameter("userid");
@@ -51,8 +56,5 @@ public class LoginServlet extends HttpServlet {
 			req.getRequestDispatcher(pathfalse).forward(req,resp);
 		}
 		
-	}
-	public void doPost(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
-		this.doGet(req,resp);
 	}
 }

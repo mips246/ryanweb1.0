@@ -26,6 +26,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		return true;
  		}
 	</script>
+	<script>
+	    function check(){                 
+	        var ids = document.getElementsByName("role");                  
+	        var flag = false ;                
+	        for(var i=0;i<ids.length;i++){  
+	            if(ids[i].checked){  
+	                flag = true ;  
+	                break ;  
+	            }  
+	        }  
+	        if(!flag){  
+	            alert("请选择身份！");  
+	            return false ;  
+	        }  
+	    }
+	    
+    </script>
 </head>
 <body>
 <%
@@ -96,12 +113,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		</div>
 		<div class="col-5" align="center">
-			<select>
-               <option name="usertype" value="1">学生</option>
-               <option name="usertype" value="2">教师</option>
-               <option name="usertype" value="3">助教</option>
-               <option name="usertype" value="0">管理员</option>
-            </select>
+		    <input type="radio" name="role" value="student">学生
+            <input type="radio" name="role" value="teacher">教师
+            <input type="radio" name="role" value="admin">管理员
 		</div>
 	</div>
 
