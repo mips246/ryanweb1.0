@@ -41,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 					//flag=true;
 					HttpSession hs=req.getSession();
 					hs.setAttribute("userid", userid);
+					hs.setAttribute("role", role);
 				}else {
 					info.add("µÇÂ¼Ê§°Ü");
 				}
