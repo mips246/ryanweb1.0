@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80016
 File Encoding         : 65001
 
-Date: 2019-10-23 21:01:20
+Date: 2019-10-24 16:15:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,7 +53,6 @@ DROP TABLE IF EXISTS `courseselect`;
 CREATE TABLE `courseselect` (
   `coursenumber` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `studentid` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `report` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `grade` int(11) NOT NULL,
   PRIMARY KEY (`coursenumber`,`studentid`),
   KEY `studentid` (`studentid`),
@@ -72,8 +71,6 @@ DROP TABLE IF EXISTS `courseteacher`;
 CREATE TABLE `courseteacher` (
   `coursenumber` varchar(40) NOT NULL,
   `teacherid` varchar(40) NOT NULL,
-  `file` varchar(100) NOT NULL,
-  `video` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`coursenumber`,`teacherid`),
   KEY `teacherid` (`teacherid`),
   CONSTRAINT `coursenumber` FOREIGN KEY (`coursenumber`) REFERENCES `course` (`coursenumber`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -85,35 +82,24 @@ CREATE TABLE `courseteacher` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `homework`
+-- Table structure for `file`
 -- ----------------------------
-DROP TABLE IF EXISTS `homework`;
-CREATE TABLE `homework` (
-  `studentid` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `coursenumber` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `descriptionurl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `homeworkurl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `grade1` int(3) DEFAULT NULL,
-  `grade2` int(3) DEFAULT NULL,
-  `grade3` int(3) DEFAULT NULL,
-  `grade4` int(3) DEFAULT NULL,
-  `grade5` int(3) DEFAULT NULL,
-  `grade6` int(3) DEFAULT NULL,
-  `grade7` int(3) DEFAULT NULL,
-  `grade8` int(3) DEFAULT NULL,
-  `grade9` int(3) DEFAULT NULL,
-  `grade10` int(3) DEFAULT NULL,
-  `grade11` int(3) DEFAULT NULL,
-  `grade12` int(3) DEFAULT NULL,
-  `grade13` int(3) DEFAULT NULL,
-  PRIMARY KEY (`studentid`,`coursenumber`),
-  KEY `course` (`coursenumber`),
-  CONSTRAINT `course` FOREIGN KEY (`coursenumber`) REFERENCES `course` (`coursenumber`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `student` FOREIGN KEY (`studentid`) REFERENCES `student` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `file_url` varchar(100) NOT NULL,
+  `studentid` varchar(40) DEFAULT NULL,
+  `courseid` varchar(40) DEFAULT NULL,
+  `teacherid` varchar(40) DEFAULT NULL,
+  `role_type` int(3) NOT NULL,
+  `grade` int(3) DEFAULT NULL,
+  `course_section` int(3) DEFAULT NULL,
+  `creat_time` varchar(40) DEFAULT NULL,
+  `file_name` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`file_url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of homework
+-- Records of file
 -- ----------------------------
 
 -- ----------------------------
