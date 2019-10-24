@@ -1,13 +1,12 @@
 package vo;
 
-import java.util.Date;
-import java.util.List;
 
 public class Course {
 	private String coursename;
-	private String coursenumber;
+	private String courseid;
 	private int studentcount;
-	private Date createtime;
+	private String teacherid;
+	private String createtime;
 	public String getCoursename() {
 		return coursename;
 	}
@@ -20,17 +19,24 @@ public class Course {
 	public void setStudentcount(int studentcount) {
 		this.studentcount = studentcount;
 	}
-	public Date getCreatetime() {
+	public String getCreatetime() {
 		return createtime;
 	}
-	public void setCreatetime(Date createtime) {
+	public void setCreatetime(String createtime) {
 		this.createtime = createtime;
 	}
-	public String getCoursenumber() {
-		return coursenumber;
+	public String getCourseid() {
+		return courseid;
 	}
-	public void setCoursenumber(String coursenumber) {
-		this.coursenumber = coursenumber;
+	public void setCoursenumber(String courseid) {
+		this.courseid = courseid;
 	}
+	public String getTeacherid() {
+		return teacherid;
+	}
+	public void setTeacherid(String teacherid) {
+		this.teacherid = teacherid;
+	}
+	
 	
 }

@@ -69,19 +69,19 @@ public class BaseDAO {
 		}
 	}
     
-    protected static void setCacheMap(String index, String o) {
-    	Date time = new Date();
-		CacheMgr.getInstance().addCache(index, o, CacheMgr.getGeneralModel(time.getTime()));
-	}
-    
-    public static void removeCache(String number) {
-		CacheMgr.getInstance().removeCache(number);
-	}
-    
-    public static String getCacheFlag(String number) {
-    	String o = CacheMgr.getInstance().getValue(number);
-		return o;
-	}
+//    protected static void setCacheMap(String index, String o) {
+//    	Date time = new Date();
+//		CacheMgr.getInstance().addCache(index, o, CacheMgr.getGeneralModel(time.getTime()));
+//	}
+//    
+//    public static void removeCache(String number) {
+//		CacheMgr.getInstance().removeCache(number);
+//	}
+//    
+//    public static String getCacheFlag(String number) {
+//    	String o = CacheMgr.getInstance().getValue(number);
+//		return o;
+//	}
     
     public static String ReformatBlank(String str) {
 		if (str == null) {
