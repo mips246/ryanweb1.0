@@ -7,7 +7,7 @@ public class DatabaseConnection {
 	private static final String DBDRIVER="com.mysql.cj.jdbc.Driver";
 	private static final String DBURL="jdbc:mysql://localhost:3306/ryan1?serverTimezone=UTC";
 	private static final String DBUSER="root";
-	private static final String DBPASSWORD="123";
+	private static final String DBPASSWORD="0623";
 	private Connection conn=null;
 	public DatabaseConnection()throws Exception{
 		try {
