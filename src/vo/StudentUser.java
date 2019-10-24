@@ -1,5 +1,8 @@
 package vo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class StudentUser {
 	private String userid;
 	private String name;
@@ -22,5 +25,22 @@ public class StudentUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public boolean isValid(String pwd){
+		if(pwd.equals(password)){
+			return true;
+		}
+		else return false;
+	}
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject obj = new JSONObject();
+		obj.put("u_number", snumber);
+		obj.put("u_name", sname);
+		obj.put("u_grade", getGradeString());
+		obj.put("u_major", smajor);
+		return obj;
+	}
 	
+	public String getGradeString() {
+		return String.valueOf(sgrade);
+	}
 }
