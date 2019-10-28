@@ -36,7 +36,7 @@ CREATE TABLE `admin` (
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `courseid` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `coursename` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `coursename` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `studentcount` int(10) NOT NULL,
   `createtime` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`courseid`)
