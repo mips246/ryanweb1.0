@@ -33,14 +33,8 @@ public class StudentUser {
 	}
 	public JSONObject toJsonObject() throws JSONException {
 		JSONObject obj = new JSONObject();
-		obj.put("u_number", snumber);
-		obj.put("u_name", sname);
-		obj.put("u_grade", getGradeString());
-		obj.put("u_major", smajor);
+		obj.put("u_number", userid);
+		obj.put("u_name", name);
 		return obj;
-	}
-	
-	public String getGradeString() {
-		return String.valueOf(sgrade);
 	}
 }

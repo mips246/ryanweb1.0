@@ -105,18 +105,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 %>
 	<div class="inputstyle">
-		<div class="col-5 inputbutton" align="center">
-			<form action='LoginServlet' method='post' onsubmit="return validate(this)">
+		<form action='LoginServletNew' method='post' onsubmit="return validate(this)">
+			<div class="col-5 inputbutton" align="center">
 		        <input type='text' class="form_input" placeholder="Enter your account" name='userid' value=''/><br/>
 			    <input type='password' class="form_input" placeholder="Enter your password" name='userpass' value=''/><br/>
 			    <input type='submit' value='登录'/>  <br/>
-			</form>
-		</div>
-		<div class="col-5" align="center">
-		    <input type="radio" name="role" value="student">学生
-            <input type="radio" name="role" value="teacher">教师
-            <input type="radio" name="role" value="admin">管理员
-		</div>
+			</div>
+			<div class="col-5" align="center">
+			    <input type="radio" name="role" value="student" checked="checked">学生
+	            <input type="radio" name="role" value="teacher">教师
+	            <input type="radio" name="role" value="admin">管理员
+			</div>
+		</form>
 	</div>
 
 

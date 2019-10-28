@@ -1,15 +1,15 @@
 package vo;
 
 public class CourseSelect {
-	private String coursenumber;
+	private String courseid;
 	private String userid;
 	private String homeworkurl;
 	private String reporturl;
-	public String getCoursenumber() {
-		return coursenumber;
+	public String getCourseid() {
+		return courseid;
 	}
-	public void setCoursenumber(String coursenumber) {
-		this.coursenumber = coursenumber;
+	public void setCourseid(String courseid) {
+		this.courseid = courseid;
 	}
 	public String getUserid() {
 		return userid;

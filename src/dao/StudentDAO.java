@@ -1,12 +1,15 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import vo.CourseSelect;
 import vo.StudentUser;
 
 public class StudentDAO extends BaseDAO{
@@ -71,13 +74,13 @@ public class StudentDAO extends BaseDAO{
 		return true;
 	}
  	
- 	public static List<Selected> selectedCourseResult(String number) throws SQLException {
+ 	public static List<CourseSelect> selectedCourseResult(String number) throws SQLException {
  		if (number == null) {
 			return null;
 		}
- 		List<Selected> list = new ArrayList<>();
- 		String sql = "SELECT course_cno from ES_selected where student_sno =?;";
- 		String sql2 = "SELECT cno,cname,tname from ES_course,ES_teacher where cno =? and teacher_tno = tno;";
+ 		List<CourseSelect> list = new ArrayList<>();
+ 		String sql = "SELECT course_cno from coursestudent where student_sno =?;";
+ 		String sql2 = "SELECT cno,cname,tname from coursestudent,teacher where cno =? and teacher_tno = tno;";
  		
  		openConnection();
  		pstmt = getPStatement(sql);
@@ -90,10 +93,8 @@ public class StudentDAO extends BaseDAO{
  			pstmt2.setString(1, resultSet.getString("course_cno"));
  			result = pstmt2.executeQuery();
  			if (result.next()) {
- 				Selected s = new Selected();
- 				s.setCno(result.getString("cno"));
-				s.setCourseName(result.getString("cname"));
-				s.setTeacherName(result.getString("tname"));
+ 				CourseSelect s = new CourseSelect();
+ 				s.setCourseid(result.getString("courseid"));
 				list.add(s);
 			}
 		}
@@ -121,32 +122,25 @@ public class StudentDAO extends BaseDAO{
 		return SelectCourseRun.RET > 0;
 	}
 	
-    public static StudentUser login(String name, String pwd){
+    public static StudentUser login(String id, String pwd){
     	//SQL model
-    	String sql = "SELECT * FROM student WHERE studentid=?;";
+    	String sql = "SELECT * FROM student WHERE userid=?;";
     	openConnection();
-    	
     	StudentUser u = new StudentUser();
     	
     	try {
     		pstmt = getPStatement(sql);
-    		pstmt.setString(1, name);
-    		
+    		pstmt.setString(1, id);
     		ResultSet result = pstmt.executeQuery();
-    		
+    		//显然，分别从数据库和前端取出password然后调用student类的invalid判断密码是否通过
     		if(result.next()){
-    			String spwd = result.getString("spasswd");
-    			
+    			String spwd = result.getString("password");
     			u.setPassword(spwd);
-    			
+    			u.setName(result.getString("name"));
     			if(u.isValid(pwd)){
-    				u.setNumber(name);
-    				u.setName(result.getString("sname"));
-    				u.setGrade(result.getInt("grade"));
-    				u.setMajor(result.getString("major"));
+    				u.setUserid(id);
     				System.out.println("User Login:"+u.getName());
-    				setCacheMap(name, "student");
-    				
+    				//setCacheMap(name, "student");
         			return u;
     			}
     		}
