@@ -8,13 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.StudentDAO;
+import dao.TeacherDAO;
 import vo.StudentUser;
+import vo.TeacherUser;
 
 public class LoginServletNew extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private final String errorCode = "-1";
     private final String successCode = "0";
-    String pathtrue="main.jsp";
+    String studentpath="main.jsp";
+    String teacherpath="teachermain.jsp";
 	String pathfalse="login.jsp";
     public LoginServletNew() {
     	super();
@@ -41,8 +44,22 @@ public class LoginServletNew extends HttpServlet {
     		}else {
     			req.setAttribute("u_error", successCode);
     			req.setAttribute("u_id", user.getUserid());
-    			req.getRequestDispatcher(pathtrue).forward(req,resp);
+    			req.getRequestDispatcher(studentpath).forward(req,resp);
     		}
+    	}else if(role.equals("teacher")){
+    		TeacherUser user=TeacherDAO.login(username, password);
+    		if(user==null) {
+    			System.out.println("login failed :"+username);
+				req.setAttribute("u_error", errorCode);
+				getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+				return ;
+    		}else {
+    			req.setAttribute("u_error", successCode);
+    			req.setAttribute("u_name", user.getName());
+    			req.getRequestDispatcher(teacherpath).forward(req,resp);
+    		}
+    	}else if(role.equals("admin")) {
+    		
     	}
     }
 }

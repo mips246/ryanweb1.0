@@ -22,5 +22,11 @@ public class TeacherUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public boolean isValid(String pwd) {
+		if(pwd.equals(password)){
+			return true;
+		}
+		else return false;
+	}
 	
 }
