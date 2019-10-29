@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80016
 File Encoding         : 65001
 
-Date: 2019-10-28 19:03:30
+Date: 2019-10-28 20:36:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,6 +29,7 @@ CREATE TABLE `admin` (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
+INSERT INTO `admin` VALUES ('admin', 'Administrator', '142857');
 
 -- ----------------------------
 -- Table structure for `course`
@@ -45,6 +46,7 @@ CREATE TABLE `course` (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
+INSERT INTO `course` VALUES ('1', '计算机组成原理', '50', '2019.10.1');
 
 -- ----------------------------
 -- Table structure for `courseselect`
@@ -134,3 +136,4 @@ CREATE TABLE `teacher` (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
+INSERT INTO `teacher` VALUES ('100001', '张三', '123456', '计算机组成原理');

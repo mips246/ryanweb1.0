@@ -35,7 +35,7 @@ public class TeacherDAO extends BaseDAO{
     	}finally{
     		closeConnect();
     	}
-    	return null;
+    	return u;
 	}
 	
 }

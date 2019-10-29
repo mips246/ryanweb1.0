@@ -1,14 +1,17 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import common.Info;
+import vo.Admin;
 import vo.Course;
 import vo.StudentUser;
 import vo.TeacherUser;
 
 public class AdminDAO extends BaseDAO{
 	private static final String TAG = AdminDAO.class.getSimpleName();
+	
 	public static boolean insert(StudentUser u) {
 		if (u.getUserid()==null) {
 			return false;
@@ -201,5 +204,32 @@ public class AdminDAO extends BaseDAO{
     	System.out.println("< ¸üÐÂÊ§°Ü >");
     	return false;
     }
+	public static Admin login(String id, String pwd){
+    	String sql = "SELECT * FROM admin WHERE userid=?;";
+    	openConnection();
+    	Admin u = new Admin();
+    	
+    	try {
+    		pstmt = getPStatement(sql);
+    		pstmt.setString(1, id);
+    		ResultSet result = pstmt.executeQuery();
+    		if(result.next()){
+    			String spwd = result.getString("password");
+    			u.setPassword(spwd);
+    			u.setName(result.getString("username"));
+    			if(u.isValid(pwd)){
+    				u.setUserid(id);
+    				System.out.println("User Login:"+u.getName());
+    				//setCacheMap(name, "student");
+        			return u;
+    			}
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}finally{
+    		closeConnect();
+    	}
+    	return u;
+	}
 	
 }

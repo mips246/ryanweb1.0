@@ -149,7 +149,7 @@ public class StudentDAO extends BaseDAO{
     	}finally{
     		closeConnect();
     	}
-    	return null;
+    	return u;
 	}
     
     public static ArrayList<JSONObject> getGrades(String snumber) {

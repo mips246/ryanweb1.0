@@ -22,6 +22,12 @@ public class Admin {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public boolean isValid(String pwd) {
+		if(pwd==password) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 }
