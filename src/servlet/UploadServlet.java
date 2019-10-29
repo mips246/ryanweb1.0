@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import dao.FileDAO;
+import vo.MyFile;
  
 
 /**
@@ -60,17 +63,28 @@ public class UploadServlet extends HttpServlet {
         //String uploadPath = "E:\\Myeclipse_program\\MIPS246\\WebRoot\\homework\\数字逻辑";
         //System.out.println(uploadPath);
         //String outerpath = "E:\\Myeclipse_program\\MIPS246\\WebRoot";
-        String outerpath = System.getProperty("user.dir") + File.separator + "WebRoot";	//最外层文件夹
-        String courseid	 = (String) request.getAttribute("courseid");					//取课程id作为外层文件夹名
-        String roletype  = (String) request.getAttribute("roletype");					//取登陆用户的角色类型
-        String userid 	 = null;														//取用户id为内层文件夹名
-        boolean isstudent = true;
+        String 	outerpath	  = System.getProperty("user.dir") + File.separator + "WebRoot";	//最外层文件夹
+        String 	courseid	  = (String) request.getAttribute("courseid");						//取课程id作为外层文件夹名
+        String 	roletype      = (String) request.getAttribute("roletype");						//取登陆用户的角色类型
+        String 	userid 	 	  = null;															//取用户id为内层文件夹名
+        int		filetype 	  = (int) request.getAttribute("filetype");							//表示文件类型
+        int 	coursesection = (int) request.getAttribute("coursesection");					//表示课程小节
+        
+        MyFile myfile = new MyFile();
+        myfile.setFiletype(filetype);
+        myfile.setCoursesection(coursesection);
+        myfile.setCourseid(courseid);
+        myfile.setGrade(-1);
+        
         if (roletype.equals("student")) {
         	userid = (String) request.getAttribute("studentid");
+        	myfile.setStudentid(userid);
+        	myfile.setTeacherid(null);
         }
         else if (roletype.equals("teacher")) {
         	userid = (String) request.getAttribute("teacherid");
-        	isstudent = false;
+        	myfile.setStudentid(null);
+        	myfile.setTeacherid(userid);
         }
         else {
         	PrintWriter writer = response.getWriter();
@@ -99,14 +113,20 @@ public class UploadServlet extends HttpServlet {
                     // 处理不在表单中的字段
                     if (!item.isFormField()) {
                     	//第一个getname()返回值有时只是文件名，有时是绝对路径
-                        String fileName = new File(item.getName()).getName();//文件名file_name
-                        String filePath = uploadpath + File.separator + fileName;//文件的绝对路径，file_url
+                        String filename = new File(item.getName()).getName();//文件名file_name
+                        String filePath = uploadpath + File.separator + filename;//文件的绝对路径，file_url
                         File storeFile = new File(filePath);
                         System.out.println(filePath);// 在控制台输出文件的上传路径
                         item.write(storeFile);// 保存文件到硬盘
                         Date time = new Date(storeFile.lastModified());
                         String filetime = time.toString();//文件最后修改时间（创建时间）,create_time
                         request.setAttribute("message","文件上传成功!");
+                        
+                        myfile.setCreatetime(filetime);
+                        myfile.setFileurl(filePath);
+                        myfile.setFilename(filename);
+                        
+                        FileDAO.insert(myfile);
                     }
                 }
             }
