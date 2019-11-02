@@ -31,6 +31,13 @@
     <description>This is the description of my J2EE component</description>
     <servlet-class>servlet.LoginServletNew</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AdminCourseServlet</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>servlet.AdminCourseServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -55,6 +62,10 @@
   <servlet-mapping>
     <servlet-name>LoginServletNew</servlet-name>
     <url-pattern>/LoginServletNew</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminCourseServlet</servlet-name>
+    <url-pattern>/AdminCourseServlet</url-pattern>
   </servlet-mapping>
   
   <filter>
