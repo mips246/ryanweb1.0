@@ -3,6 +3,10 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import common.Info;
 import vo.Admin;
 import vo.Course;
@@ -43,7 +47,7 @@ public class AdminDAO extends BaseDAO{
 			return false;
 		}
 		openConnection();
-		String sql = "INSERT INTO teacher values(?, ?, ?); ";
+		String sql = "INSERT INTO teacher values(?, ?, ?, ?); ";
 		pstmt = getPStatement(sql);
 		String pwd = u.getPassword();
 		if (pwd.isEmpty()) {
@@ -53,6 +57,7 @@ public class AdminDAO extends BaseDAO{
         	pstmt.setString(1,u.getUserid());  
 			pstmt.setString(2,u.getName());
 			pstmt.setString(3, pwd);
+			pstmt.setString(4, u.getDescription());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -204,6 +209,26 @@ public class AdminDAO extends BaseDAO{
     	System.out.println("< ¸üÐÂÊ§°Ü >");
     	return false;
     }
+	
+	public static JSONArray getTeacherList() throws SQLException, JSONException {
+		JSONArray teacherlist = new JSONArray();
+    	String sql = "SELECT * FROM teacher;";
+    	openConnection();
+		pstmt = getPStatement(sql);
+		ResultSet result = pstmt.executeQuery();
+		while(result.next()){
+			JSONObject obj= new JSONObject ();
+			obj.put("teacherid", result.getString("teacherid"));
+			obj.put("teachername", result.getString("teachername"));
+			obj.put("password", result.getString("password"));
+			obj.put("description", result.getString("description"));
+			teacherlist.put(obj);
+		}
+		result.close();
+		closeConnect();
+		return teacherlist;
+	}
+	
 	public static Admin login(String id, String pwd){
     	String sql = "SELECT * FROM admin WHERE userid=?;";
     	openConnection();
