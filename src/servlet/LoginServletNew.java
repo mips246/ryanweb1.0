@@ -24,7 +24,7 @@ public class LoginServletNew extends HttpServlet {
     String studentpath="main.jsp";
     String teacherpath="teachermain.jsp";
 	String pathfalse="login.jsp";
-	String adminpath="admin.jsp";
+	String adminpath="admin/admin.jsp";
 	
     public LoginServletNew() {
     	super();
