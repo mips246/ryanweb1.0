@@ -256,5 +256,21 @@ public class AdminDAO extends BaseDAO{
     	}
     	return u;
 	}
+	public static JSONArray getCourseList() throws SQLException, JSONException {
+		JSONArray courseList=new JSONArray();
+		String sql="select * from course;";
+		openConnection();
+		pstmt=getPStatement(sql);
+		ResultSet result=pstmt.executeQuery();
+		while(result.next()) {
+			JSONObject obj=new JSONObject();
+			obj.append("courseid", result.getString("courseid"));
+			obj.append("coursename", result.getString("coursename"));
+			obj.append("studentcount", result.getInt("studentcount"));
+			obj.append("createtime", result.getString("createtime"));
+			courseList.put(obj);
+		}
+		return courseList;
+	}
 	
 }

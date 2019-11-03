@@ -21,15 +21,20 @@
                 },
                 success:function (data) {
                     dealData(data);
+                },
+                error:function(jqXHR,textStatus,errorThrown){
+                    dealData(jqXHR.responseText);
                 }
             });
         }
         function dealData(data) {
+            $("#insertPlace").html("");
             var tt="<tr class=''>"
                 +"<td class=''>课程号</td>"
                 +"<td class=''>课程名</td>"
                 +"<td class=''>人数</td>"
-                +"<td class=''>创建时间</td></tr>";
+                +"<td class=''>创建时间</td>"
+                +"<td class=''>选项</td></tr>";
             $("#insertPlace").append(tt);
             $.each(data,function (index) {
                 var courseid=data[index].courseid;
@@ -40,8 +45,28 @@
                     +"<td class=''>"+courseid+"</td>"
                     +"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+studentcount+"</td>"
-                    +"<td class=''>"+createtime+"</td></tr>";
+                    +"<td class=''>"+createtime+"</td>"
+                    +"<td class=''><button onclick='deleteCourse("+courseid+")'>删除</button></td></tr>";
                 $("#insertPlace").append(tt);
+            })
+        }
+        function deleteCourse(courseid){
+            $.ajax({
+                url:"/MIPS246/AdminCourseServlet",
+                type:"post",
+                dataType:"JSON",
+                data: {
+                    method:"deleteCourse",
+                    courseid:courseid
+                },
+                success:function (data) {
+                    var deletecourseid=courseid;
+                    alert("删除成功"+courseid);
+                    loadCourseTable();
+                },
+                error:function (jqXHR,testStatus,errorThrown) {
+                    alert("删除失败");
+                }
             })
         }
     </script>
@@ -55,7 +80,7 @@ request.setCharacterEncoding("GBK");
         <div class="top-nav clearf">
             <div class="fl">
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">首</button></a>
+                    <a href=""><button type="button" class="btn btn-primary">首页</button></a>
                 </div>
                 <div class="item">
                     <a href=""><button type="button" class="btn btn-primary">课程</button></a>
@@ -75,12 +100,20 @@ request.setCharacterEncoding("GBK");
         </div>
     </div>
     <div class="container">
-        <div>
+        <div class="col-5">
             <ul></ul>
             <table>
                 <tbody id="insertPlace">
                 </tbody>
             </table>
+        </div>
+        <div class="col-5">
+            <form id="addCourse">
+                课程名称<input type="text" name="coursename"><br/>
+                课程id<input type="text" name="courseid"><br/>
+                学生人限<input type="text" name="studentcount"><br/>
+                <input type="submit" value="提交"><br/>
+            </form>
         </div>
     </div>
 </div>

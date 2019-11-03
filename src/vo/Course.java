@@ -28,7 +28,7 @@ public class Course {
 	public String getCourseid() {
 		return courseid;
 	}
-	public void setCoursenumber(String courseid) {
+	public void setCourseid(String courseid) {
 		this.courseid = courseid;
 	}
 	public String getTeacherid() {
