@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	request.setCharacterEncoding("GBK");
 %>
 <div class="container clearf">
-    <div class="container clearf">
+  <div class="container clearf">
     <div class="top-nav clearf">
       <div class="fl">
         <div class="item">
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="item">
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">课程资料</button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="file1.jsp">数字逻辑</a>
+            <a class="dropdown-item" href="file1.jsp">数逻</a>
             <a class="dropdown-item" href="file2.jsp">计算机组成原理</a>
             <a class="dropdown-item" href="file3.jsp">计算机体系结构</a>
           </div>
@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <button type="button" class="btn btn-primary ">注册</button>
         </div>
       </div>
-    </div>
+  </div>
 </div>
 <%
  	List<String>info=(List<String>)request.getAttribute("info");
