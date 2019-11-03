@@ -61,7 +61,6 @@ public class AdminTeacherServlet extends HttpServlet {
 			
 			if(AdminDAO.insert(u)) {
 				System.out.println("< Addmin Insert Teacher Successful >");
-				method = "selectAllTeacher";
 			}
 			else {
 				System.out.println("< Addmin Insert Teacher Failed >");
