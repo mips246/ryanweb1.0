@@ -76,7 +76,8 @@ public class AdminDAO extends BaseDAO{
 		try {
 	        	pstmt.setString(1,c.getCourseid());
 				pstmt.setString(2,c.getCoursename());
-				pstmt.setInt(3, c.getStudentcount());
+				//pstmt.setInt(3, c.getStudentcount());
+				pstmt.setString(4,c.getCreatetime());
 				pstmt.executeUpdate();
 		} catch (SQLException e) {
 				e.printStackTrace();

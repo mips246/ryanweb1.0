@@ -11,6 +11,54 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>admin_course</title>
     <script type="text/javascript">
+        $(doucment).ready(function(){
+            $("#insertcourse").click(function(){
+                var cid=$("#courseid").val();
+                var cname=$("#coursename").val();
+                var csc=$("#studentcount").val();
+                if (csc==""){
+                    csc="0";
+                }
+                if(cid==""){
+                    alert("课程id不能为空");
+                }
+                else if(cname==""){
+                    alert("课程名称不能为空");
+                }
+                else{
+                    addCourse(cid,cname,csc);
+                }
+            })
+        })
+        function getTime(){
+            var time=new Date();
+            var year=time.getFullYear();
+            var month=time.getMonth();
+            var day=time.getDay();
+            var hour=time.getHours();
+            return year+"-"+month+"-"+day+"-"+hour;
+        }
+        function addCourse(courseid,coursename,studentcount) {
+            $.ajax({
+                url:"/MIPS246/AdminCourseServlet",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    method:"addCourse",
+                    courseid:courseid,
+                    coursename:coursename,
+                    studentcount:studentcount,
+                    createtime:getTime()
+                },
+                success:function () {
+                    alert("成功添加");
+                    loadCourseTable();
+                },
+                error:function () {
+                    alert("添加失败");
+                }
+            });
+        }
         function loadCourseTable() {
             $.ajax({
                 url:"/MIPS246/AdminCourseServlet",
@@ -109,10 +157,10 @@ request.setCharacterEncoding("GBK");
         </div>
         <div class="col-5">
             <form id="addCourse">
-                课程名称<input type="text" name="coursename"><br/>
-                课程id<input type="text" name="courseid"><br/>
-                学生人限<input type="text" name="studentcount"><br/>
-                <input type="submit" value="提交"><br/>
+                课程id<input id="courseid" type="text" name="courseid"><br/>
+                课程名称<input id="coursename" type="text" name="coursename"><br/>
+                学生人限<input id="studentcount" type="text" name="studentcount"><br/>
+                <button id="insertcourse" type="submit">添加课程</button>
             </form>
         </div>
     </div>

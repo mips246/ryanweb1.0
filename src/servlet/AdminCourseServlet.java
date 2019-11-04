@@ -25,21 +25,27 @@ public class AdminCourseServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("½øÈëdopostÁË");
+		System.out.println("è¿›å…¥dopostäº†");
 		resp.setContentType("application/json");
     	resp.setCharacterEncoding("utf-8");
 		PrintWriter out=resp.getWriter();
 		String method=req.getParameter("method");
 		JSONArray courseList=new JSONArray();
 		String courseid=req.getParameter("courseid");
-		System.out.println("deletecourse: "+courseid);
+		String coursename=req.getParameter("coursename");
+		String studentcount=req.getParameter("studentcount");
+		String createtime=req.getParameter("createtime");
+		System.out.println("æ–°æ·»è¯¾ç¨‹åç§°:"+courseid);
+		System.out.println(studentcount);
+		//int sc=(int)Integer.parseInt(studentcount);
+		//System.out.println("deletecourse: "+courseid);
 
-//--------------------------------------------------²âÊÔÓÃÊı¾İ´úÂë
+//--------------------------------------------------æµ‹è¯•ç”¨æ•°æ®ä»£ç 
 //		JSONObject obj=new JSONObject();
 //		try {
-//			System.out.println("½øÈëTRY");
+//			System.out.println("è¿›å…¥TRY");
 //			obj.append("courseid", "123");
-//			obj.append("coursename", "¼ÆËã»ú×é³ÉÔ­Àí");
+//			obj.append("coursename", "è®¡ç®—æœºç»„æˆåŸç†");
 //			obj.append("studentcount", "50");
 //			obj.append("createtime", "20191001");
 //			courseList.put(obj);
@@ -50,7 +56,7 @@ public class AdminCourseServlet extends HttpServlet {
 //		}
 //---------------------------------------------------
 		if(method.equals("loadCourse")) {
-			System.out.println("load courseÖĞ");
+			System.out.println("load courseä¸­");
 			try{
 				courseList=AdminDAO.getCourseList();
 			}catch(SQLException|JSONException e) {
@@ -62,7 +68,7 @@ public class AdminCourseServlet extends HttpServlet {
 			Course c=new Course();
 			c.setCourseid(courseid);
 			AdminDAO.delete(c);
-			System.out.println("³É¹¦É¾³ı");
+			System.out.println("æˆåŠŸåˆ é™¤");
 			JSONObject obj=new JSONObject();
 			JSONArray deletecourse=new JSONArray();
 			try {
@@ -74,13 +80,25 @@ public class AdminCourseServlet extends HttpServlet {
 			deletecourse.put(obj);
 			out.println(deletecourse);
 		}
-//		else if(method.equals("addCourse")) {
-//			try {
-//				
-//			}catch() {
-//				
-//			}
-//		}
+		else if(method.equals("addCourse")) {
+			Course course=new Course();
+			course.setCourseid(courseid);
+			course.setCoursename(coursename);
+			//course.setStudentcount(sc);
+			course.setCreatetime(createtime);
+			AdminDAO.insert(course);
+			JSONObject obj=new JSONObject();
+			JSONArray addcourse=new JSONArray();
+			try {
+				obj.append("courseid", course.getCourseid());
+				System.out.println("æˆåŠŸæ·»åŠ ");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			addcourse.put(obj);
+			out.println(addcourse);
+		}
 		
 	}
 }
