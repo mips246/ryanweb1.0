@@ -23,6 +23,7 @@ public class BaseDAO {
     	try {
 			return conn.prepareStatement(sql);
 		} catch (SQLException e) {
+			System.out.println("conn³ö´í");
 			e.printStackTrace();
 		}
 		return null;

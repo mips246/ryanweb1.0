@@ -10,8 +10,106 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>管理员_学生操作</title>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#insertstudent").click(function(){
+                var sid=$("#id").val();
+                var name=$("#name").val();
+                var password=$("#password").val();
+                if (sid==""){
+                    alert("请输入学号")
+                }
+
+                else if(password==""){
+                    password=id;
+                }
+                else{
+                    addStudent(id,name,password);
+                }
+            })
+        })
+        function addStudent(id,name,password) {
+            $.ajax({
+                url:"/MIPS246/AdminStudentServlet",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    method:"addStudent",
+                    studentid:id,
+                    name:name,
+                    password:password
+                },
+                success:function () {
+                    alert("成功添加");
+                    loadStudentTable();
+                },
+                error:function () {
+                    alert("添加失败");
+                }
+            });
+        }
+        function loadStudentTable() {
+            $.ajax({
+                url:"/MIPS246/AdminStudentServlet",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    method:"loadStudentTable"
+                },
+                success:function (data) {
+                    console.log("进入success");
+                    dealData(data);
+                },
+                error:function(jqXHR,textStatus,errorThrown){
+                	console.log("进入error");
+                    dealData(jqXHR.responseText);
+                }
+            });
+        }
+        function dealData(data) {
+            $("#insertPlace").html("");
+            var tt="<tr class=''>"
+                +"<td class=''>id</td>"
+                +"<td class=''>姓名</td>"
+                +"<td class=''>密码</td>"
+                +"<td class=''>选项</td></tr>";
+            $("#insertPlace").append(tt);
+            $.each(data,function (index) {
+                var id=data[index].sid;
+                var name=data[index].sname;
+                var password=data[index].spassword;
+                tt="<tr class=''>"
+                    +"<td class=''>"+id+"</td>"
+                    +"<td class=''>"+name+"</td>"
+                    +"<td class=''>"+password+"</td>"
+                    +"<td class=''><button onclick='deleteStudent("+id+")'>删除</button></td></tr>";
+                $("#insertPlace").append(tt);
+            })
+        }
+        function deleteStudent(id){
+            $.ajax({
+                url:"/MIPS246/AdminStudentServlet",
+                type:"post",
+                dataType:"JSON",
+                data: {
+                    method:"deleteStudent",
+                    studentid:id
+                },
+                success:function (data) {
+                    var deletestudentid=id;
+                    alert("删除成功"+deletestudentid);
+                    loadStudentTable();
+                },
+                error:function (jqXHR,testStatus,errorThrown) {
+                    alert("删除失败");
+                }
+            })
+        }
+    </script>
+
 </head>
-<body>
+<body onload="loadStudentTable()">
 <%
 request.setCharacterEncoding("GBK");
 %>
@@ -37,6 +135,24 @@ request.setCharacterEncoding("GBK");
                     <a href=""><button type="button" class="btn btn-primary">退出</button></a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-5">
+            <ul></ul>
+            <table>
+                <tbody id="insertPlace">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-5">
+            <form id="addStudent">
+                	学生id<input id="courseid" type="text" name="id"><br/>
+                	姓名<input id="coursename" type="text" name="name"><br/>
+                password<input id="studentcount" type="password" name="password"><br/>
+                <button id="insertstudent" type="submit">添加</button>
+            </form>
         </div>
     </div>
 </div>

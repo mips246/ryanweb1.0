@@ -257,7 +257,7 @@ public class AdminDAO extends BaseDAO{
     	return u;
 	}
 	public static JSONArray getCourseList() throws SQLException, JSONException {
-		JSONArray courseList=new JSONArray();
+		JSONArray courselist=new JSONArray();
 		String sql="select * from course;";
 		openConnection();
 		pstmt=getPStatement(sql);
@@ -268,9 +268,23 @@ public class AdminDAO extends BaseDAO{
 			obj.append("coursename", result.getString("coursename"));
 			obj.append("studentcount", result.getInt("studentcount"));
 			obj.append("createtime", result.getString("createtime"));
-			courseList.put(obj);
+			courselist.put(obj);
 		}
-		return courseList;
+		return courselist;
 	}
-	
+	public static JSONArray getStudentList() throws SQLException, JSONException {
+		JSONArray studentlist=new JSONArray();
+		String sql="select * from student;";
+		openConnection();
+		pstmt=getPStatement(sql);
+		ResultSet result=pstmt.executeQuery();
+		while(result.next()) {
+			JSONObject obj=new JSONObject();
+			obj.append("sid", result.getString("userid"));
+			obj.append("sname", result.getString("name"));
+			obj.append("spassword", result.getString("password"));
+			studentlist.put(obj);
+		}
+		return studentlist;
+	}
 }

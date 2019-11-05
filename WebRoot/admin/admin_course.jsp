@@ -12,7 +12,7 @@
     <title>admin_course</title>
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#insertcourse").click(function(){
+            $("#insertstudent").click(function(){
                 var cid=$("#courseid").val();
                 var cname=$("#coursename").val();
                 var csc=$("#studentcount").val();
