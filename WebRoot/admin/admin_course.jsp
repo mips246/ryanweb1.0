@@ -11,7 +11,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>admin_course</title>
     <script type="text/javascript">
-        $(doucment).ready(function(){
+        $(document).ready(function(){
             $("#insertcourse").click(function(){
                 var cid=$("#courseid").val();
                 var cname=$("#coursename").val();
@@ -128,16 +128,16 @@ request.setCharacterEncoding("GBK");
         <div class="top-nav clearf">
             <div class="fl">
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">首页</button></a>
+                    <a href="admin.jsp"><button type="button" class="btn btn-primary">首页</button></a>
                 </div>
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">课程</button></a>
+                    <a href="admin_course.jsp"><button type="button" class="btn btn-primary">课程</button></a>
                 </div>
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">老师</button></a>
+                    <a href="admin_teacher.jsp"><button type="button" class="btn btn-primary">老师</button></a>
                 </div>
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">学生</button></a>
+                    <a href="admin_student.jsp"><button type="button" class="btn btn-primary">学生</button></a>
                 </div>
             </div>
             <div class="fr">

@@ -33,10 +33,11 @@ public class AdminCourseServlet extends HttpServlet {
 		JSONArray courseList=new JSONArray();
 		String courseid=req.getParameter("courseid");
 		String coursename=req.getParameter("coursename");
-		String studentcount=req.getParameter("studentcount");
-		String createtime=req.getParameter("createtime");
-		System.out.println("新添课程名称:"+courseid);
-		System.out.println(studentcount);
+		
+		//int sc=10;
+		
+		//System.out.println("新添课程名称是什么？:"+courseid);
+		//System.out.println(studentcount);
 		//int sc=(int)Integer.parseInt(studentcount);
 		//System.out.println("deletecourse: "+courseid);
 
@@ -81,10 +82,14 @@ public class AdminCourseServlet extends HttpServlet {
 			out.println(deletecourse);
 		}
 		else if(method.equals("addCourse")) {
+			String studentcount=req.getParameter("studentcount");
+			System.out.println("学生人数是："+studentcount);
+			int sc= Integer.parseInt(studentcount);
+			String createtime=req.getParameter("createtime");
 			Course course=new Course();
 			course.setCourseid(courseid);
 			course.setCoursename(coursename);
-			//course.setStudentcount(sc);
+			course.setStudentcount(sc);
 			course.setCreatetime(createtime);
 			AdminDAO.insert(course);
 			JSONObject obj=new JSONObject();

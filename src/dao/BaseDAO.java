@@ -42,7 +42,7 @@ public class BaseDAO {
 		    url = prop.getProperty("url");
 		    username = prop.getProperty("username");
 		    password = prop.getProperty("password");
-		    System.out.println(driver+" "+url);
+		    //System.out.println(driver+" "+url);
 		    Class.forName(driver);
 		    System.out.println("Connect Database Success.");
 		    conn = DriverManager.getConnection(url,username,password);
