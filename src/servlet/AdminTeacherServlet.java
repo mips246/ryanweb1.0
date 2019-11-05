@@ -37,16 +37,37 @@ public class AdminTeacherServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
 		String method = request.getParameter("method");
 		
-		if(method.equals("deleteTeacher")) {
+		if("deleteTeacher".equals(method)) {
 			System.out.println("< Addmin Delete Teacher >");
+			
+			TeacherUser u = new TeacherUser();
+			String teacherid = request.getParameter("teacherid");
+			u.setUserid(teacherid);
+			
+			if(AdminDAO.delete(u)) {
+				System.out.println("< Addmin Delete Teacher Successful >");
+				try {
+					jsonObject.append("teacherid", "teacherid");
+					jsonArray.put(jsonObject);
+					out.println(jsonArray);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			else {
+				System.out.println("< Addmin Delete Teacher Failed >");
+			}
 		}
 		
-		else if(method.equals("insertTeacher")) {
+		else if("insertTeacher".equals(method)) {
 			System.out.println("< Addmin Insert Teacher >");
 			
 			TeacherUser u = new TeacherUser();
@@ -61,6 +82,15 @@ public class AdminTeacherServlet extends HttpServlet {
 			
 			if(AdminDAO.insert(u)) {
 				System.out.println("< Addmin Insert Teacher Successful >");
+				try {
+					jsonObject.append("message", "Successful");
+					jsonArray.put(jsonObject);
+					out.println(jsonArray);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			else {
 				System.out.println("< Addmin Insert Teacher Failed >");
@@ -68,11 +98,11 @@ public class AdminTeacherServlet extends HttpServlet {
         	
 		}
 		
-		else if(method.equals("upgradeTeacher")) {
+		else if("upgradeTeacher".equals(method)) {
 			System.out.println("< Addmin Upgrade Teacher >");
 		}
 		
-		else if(method.equals("selectAllTeacher")) {
+		else if("selectAllTeacher".equals(method)) {
 			System.out.println("< Addmin Select All Teacher >");
 			
 			try {
