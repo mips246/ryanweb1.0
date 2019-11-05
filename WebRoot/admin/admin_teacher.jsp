@@ -4,14 +4,15 @@
     <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    
     <link rel="stylesheet" href="https://cdn.bootcss.com/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>管理员 教师操作界面</title>
-
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
     <script type="text/javascript">
         function loadInfoTable(){
@@ -34,6 +35,7 @@
                             +"<td>"+password+"</td>"
                             +"<td>"+description+"</td>"
                             +"<td><button onclick='deleteTeacher("+teacherid+")'>删除</button></td>"
+                            +"<td><button onclick='teacherJumpToCourseSelect("+teacherid+")'>选课</button></td>"
                             +"</tr>";
                         $("#insertPlace").append(tt);
                     });
@@ -110,6 +112,14 @@
             })
         }
     </script>
+    
+    <script type="text/javascript">
+    	function teacherJumpToCourseSelect(teacherid){
+    		var url = "admin_teacher_course.jsp?teacherid=" + teacherid;
+    		window.location.href=url;
+    		//window.open(url);
+    	}
+    </script>
 </head>
 
 
@@ -147,6 +157,7 @@
                 <th>密码</th>
                 <th>简介</th>
                 <th>点击删除</th>
+                <th>点击选课</th>
             </tr>
             </thead>
 
@@ -154,13 +165,13 @@
             </tbody>
         </table>
         <h3>添加教师</h3>
-        工号：<input id="teacherid" name="teacherid"type="text"value="">
-        姓名：<input id="teachername" name="teachername"type="text"value="">
-        密码：<input id="password" name="password"type="text"value="">
-        简介：<input id="description" name="description"type="text"value="">
+        	工号：<input id="teacherid" name="teacherid"type="text"value="">
+        	姓名：<input id="teachername" name="teachername"type="text"value="">
+       	 	密码：<input id="password" name="password"type="text"value="">
+        	简介：<input id="description" name="description"type="text"value="">
         <br>
         <button id="insertTeacher" type="submit">添加教师</button>
     </div>
-</div>>
+</div>
 </body>
 </html>

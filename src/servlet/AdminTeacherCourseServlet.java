@@ -1,0 +1,78 @@
+package servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import dao.AdminDAO;
+import vo.TeacherUser;
+
+public class AdminTeacherCourseServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	public AdminTeacherCourseServlet() {
+		super();
+	}
+
+	public void destroy() {
+		super.destroy(); // Just puts "destroy" string in log
+		// Put your code here
+	}
+
+	public void init() throws ServletException {
+		// Put your code here
+	}
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+		String method = request.getParameter("method");
+		
+		if("insertTeacher".equals(method)) {
+			System.out.println("< Addmin Teacher Select Course >");
+			
+			TeacherUser u = new TeacherUser();
+			String teacherid = request.getParameter("teacherid");
+			String teachername = request.getParameter("teachername");
+			String password = request.getParameter("password");
+			String description = request.getParameter("description");
+			u.setUserid(teacherid);
+			u.setName(teachername);
+			u.setPassword(password);
+			u.setDescription(description);
+			
+			if(AdminDAO.insert(u)) {
+				System.out.println("< Addmin Insert Teacher Successful >");
+				try {
+					jsonObject.append("message", "Successful");
+					jsonArray.put(jsonObject);
+					out.println(jsonArray);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			else {
+				System.out.println("< Addmin Insert Teacher Failed >");
+			}
+        	
+		}
+	}
+}
