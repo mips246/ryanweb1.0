@@ -52,15 +52,16 @@
                     +"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+studentcount+"</td>"
                     +"<td class=''>"+createtime+"</td>"
-                    +"<td class=''><button onclick='teacherSelectCourse("+courseid+")'>选择</button></td></tr>";
+                    +"<td class=''><button onclick='teacherSelectCourse("+courseid+","+coursename+")'>选择</button></td></tr>";
                 $("#courseInsertPlace").append(tt);
             })
         }
 	</script>
 	
 	<script type="text/javascript">
-		function teacherSelectCourse(courseid){
+		function teacherSelectCourse(courseid,coursename){
 			var teacherid = getUrlParams("teacherid");
+			var teachername = getUrlParams("teachername");
             $.ajax({
                 url:"/MIPS246/AdminTeacherCourseServlet",
                 type:"POST",
@@ -68,7 +69,9 @@
                 data:{
                     method:"selectCourse",
                     teacherid:teacherid,
-                    courseid:courseid
+                    teachername:teachername,
+                    courseid:courseid,
+                    coursename:coursename
                 },
                 success:function(){
                     alert("成功添加！");
