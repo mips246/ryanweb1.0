@@ -3,7 +3,7 @@
 <head>
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
     	pageEncoding="UTF-8"%>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>管理员 教师选课操作界面</title>
 	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 	
@@ -11,7 +11,8 @@
 		function getUrlParams(name){
      		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
      		var r = window.location.search.substr(1).match(reg);
-     		if(r!=null) return unescape(r[2]); 
+     		//if(r!=null) return unescape(r[2]); 
+     		if(r!=null) return decodeURI(r[2]);
      		return null;
 		}
 	</script>
@@ -19,7 +20,7 @@
 	<script type="text/javascript">
 		function loadCourseTable() {
             $.ajax({
-                url:"/MIPS246/AdminCourseServlet",
+                url:"/MIPS246/AdminTeacherCourseServlet",
                 type:"POST",
                 dataType:"json",
                 data:{
@@ -52,7 +53,7 @@
                     +"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+studentcount+"</td>"
                     +"<td class=''>"+createtime+"</td>"
-                    +"<td class=''><button onclick='teacherSelectCourse("+courseid+","+coursename+")'>选择</button></td></tr>";
+                    +'<td><button onclick="teacherSelectCourse(\''+courseid+'\',\''+coursename+'\')">选课</button></td>';
                 $("#courseInsertPlace").append(tt);
             })
         }
@@ -74,11 +75,11 @@
                     coursename:coursename
                 },
                 success:function(){
-                    alert("成功添加！");
+                    alert(teachername+"老师选课成功！");
                     window.location.reload();
                 },
                 error:function(){
-                    alert("添加失败！");
+                    alert(teachername+"老师选课失败！");
                     window.location.reload();
                 }
             });
