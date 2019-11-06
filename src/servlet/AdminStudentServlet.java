@@ -49,6 +49,7 @@ public class AdminStudentServlet extends HttpServlet {
 			String sid=req.getParameter("studentid");
 			String sname=req.getParameter("name");
 			String password=req.getParameter("password");
+			System.out.println("id:"+sid);
 			StudentUser s=new StudentUser();
 			s.setUserid(sid);
 			s.setName(sname);

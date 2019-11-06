@@ -47,5 +47,6 @@ request.setCharacterEncoding("GBK");
         <h4>功能3</h4>
         <p>对老师的增删改，查看所有老师的信息</p>
     </div>
+</div>
 </body>
 </html>

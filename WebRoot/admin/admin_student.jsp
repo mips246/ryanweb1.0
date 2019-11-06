@@ -14,22 +14,23 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $("#insertstudent").click(function(){
-                var sid=$("#id").val();
+                var id=$("#id").val();
                 var name=$("#name").val();
                 var password=$("#password").val();
-                if (sid==""){
-                    alert("请输入学号")
+                console.log("进入insertstudent"+id+" "+name+" "+password);
+                if (id==""){
+                    alert("请输入学号");
+                    window.location.reload();
                 }
 
                 else if(password==""){
                     password=id;
                 }
-                else{
                     addStudent(id,name,password);
-                }
             })
         })
         function addStudent(id,name,password) {
+        	console.log("进入addStudent")
             $.ajax({
                 url:"/MIPS246/AdminStudentServlet",
                 type:"POST",
@@ -42,10 +43,11 @@
                 },
                 success:function () {
                     alert("成功添加");
-                    loadStudentTable();
+                    window.location.reload();
                 },
                 error:function () {
                     alert("添加失败");
+                    window.location.reload();
                 }
             });
         }
@@ -147,12 +149,10 @@ request.setCharacterEncoding("GBK");
             </table>
         </div>
         <div class="col-5">
-            <form id="addStudent">
-                	学生id<input id="courseid" type="text" name="id"><br/>
-                	姓名<input id="coursename" type="text" name="name"><br/>
-                password<input id="studentcount" type="password" name="password"><br/>
+                	学生id<input id="id" type="text" name="id"><br/>
+                	姓名<input id="name" type="text" name="name"><br/>
+                password<input id="password" type="password" name="password"><br/>
                 <button id="insertstudent" type="submit">添加</button>
-            </form>
         </div>
     </div>
 </div>
