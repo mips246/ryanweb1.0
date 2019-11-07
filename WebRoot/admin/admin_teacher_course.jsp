@@ -53,7 +53,8 @@
                     +"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+studentcount+"</td>"
                     +"<td class=''>"+createtime+"</td>"
-                    +'<td><button onclick="teacherSelectCourse(\''+courseid+'\',\''+coursename+'\')">选课</button></td>';
+                    +'<td><button onclick="teacherSelectCourse(\''+courseid+'\',\''+coursename+'\')">选课</button></td>'
+                    +"</tr>";
                 $("#courseInsertPlace").append(tt);
             })
         }
