@@ -12,18 +12,22 @@
     <title>admin_course</title>
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#insertstudent").click(function(){
+            $("#insertcourse").click(function(){
+            	
                 var cid=$("#courseid").val();
                 var cname=$("#coursename").val();
                 var csc=$("#studentcount").val();
+                console.log(cid+" "+cname+" "+csc);
                 if (csc==""){
                     csc="0";
                 }
                 if(cid==""){
                     alert("课程id不能为空");
+                    window.location.reload();
                 }
                 else if(cname==""){
                     alert("课程名称不能为空");
+                    window.location.reload();
                 }
                 else{
                     addCourse(cid,cname,csc);
@@ -52,10 +56,11 @@
                 },
                 success:function () {
                     alert("成功添加");
-                    loadCourseTable();
+                    window.location.reload();
                 },
                 error:function () {
                     alert("添加失败");
+                    window.location.reload();
                 }
             });
         }
@@ -156,12 +161,10 @@ request.setCharacterEncoding("GBK");
             </table>
         </div>
         <div class="col-5">
-            <form id="addCourse">
                 课程id<input id="courseid" type="text" name="courseid"><br/>
                 课程名称<input id="coursename" type="text" name="coursename"><br/>
                 学生人限<input id="studentcount" type="text" name="studentcount"><br/>
                 <button id="insertcourse" type="submit">添加课程</button>
-            </form>
         </div>
     </div>
 </div>

@@ -21,6 +21,7 @@ public class AdminCourseServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("../errorpage.jsp").forward(req, resp);
+		//doPost(req,resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,7 +57,7 @@ public class AdminCourseServlet extends HttpServlet {
 //			e.printStackTrace();
 //		}
 //---------------------------------------------------
-		if(method.equals("loadCourse")) {
+		if("loadCourse".equals(method)) {
 			System.out.println("load course中");
 			try{
 				courseList=AdminDAO.getCourseList();
@@ -65,7 +66,7 @@ public class AdminCourseServlet extends HttpServlet {
 			}
 			out.println(courseList);
 		}
-		else if(method.equals("deleteCourse")) {
+		else if("deleteCourse".equals(method)) {
 			Course c=new Course();
 			c.setCourseid(courseid);
 			AdminDAO.delete(c);
@@ -81,7 +82,7 @@ public class AdminCourseServlet extends HttpServlet {
 			deletecourse.put(obj);
 			out.println(deletecourse);
 		}
-		else if(method.equals("addCourse")) {
+		else if("addCourse".equals(method)) {
 			String studentcount=req.getParameter("studentcount");
 			System.out.println("学生人数是："+studentcount);
 			int sc= Integer.parseInt(studentcount);
