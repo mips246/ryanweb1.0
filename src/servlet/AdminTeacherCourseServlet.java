@@ -14,7 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dao.AdminDAO;
-import vo.TeacherUser;
+import dao.AdminTeacherCourseDAO;
+import vo.CourseTeacher;
 
 public class AdminTeacherCourseServlet extends HttpServlet {
 
@@ -43,22 +44,23 @@ public class AdminTeacherCourseServlet extends HttpServlet {
 		JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
 		String method = request.getParameter("method");
+		System.out.println("< AdminTeacherCourseServlet >");
 		
-		if("insertTeacher".equals(method)) {
+		if("selectCourse".equals(method)) {
 			System.out.println("< Addmin Teacher Select Course >");
 			
-			TeacherUser u = new TeacherUser();
+			CourseTeacher ct = new CourseTeacher();
 			String teacherid = request.getParameter("teacherid");
 			String teachername = request.getParameter("teachername");
-			String password = request.getParameter("password");
-			String description = request.getParameter("description");
-			u.setUserid(teacherid);
-			u.setName(teachername);
-			u.setPassword(password);
-			u.setDescription(description);
+			String courseid = request.getParameter("courseid");
+			String coursename = request.getParameter("coursename");
+			ct.setTeacherid(teacherid);
+			ct.setTeachername(teachername);
+			ct.setCourseid(courseid);
+			ct.setCoursename(coursename);
 			
-			if(AdminDAO.insert(u)) {
-				System.out.println("< Addmin Insert Teacher Successful >");
+			if(AdminTeacherCourseDAO.insert(ct)) {
+				System.out.println("< Addmin Teacher Select Course Successful >");
 				try {
 					jsonObject.append("message", "Successful");
 					jsonArray.put(jsonObject);
@@ -70,9 +72,18 @@ public class AdminTeacherCourseServlet extends HttpServlet {
 				
 			}
 			else {
-				System.out.println("< Addmin Insert Teacher Failed >");
+				System.out.println("< Addmin Teacher Select Course Failed >");
 			}
         	
+		}
+		else if("loadCourse".equals(method)) {
+			System.out.println("< Addmin Teacher Load All Course Table >");
+			try{
+				jsonArray = AdminDAO.getCourseList();
+			}catch(SQLException|JSONException e) {
+				e.printStackTrace();
+			}
+			out.println(jsonArray);
 		}
 	}
 }

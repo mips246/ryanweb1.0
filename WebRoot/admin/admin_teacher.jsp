@@ -14,6 +14,14 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>管理员 教师操作界面</title>
 
+	<script type="text/javascript">
+    	function teacherJumpToCourseSelect(teacherid,teachername){
+    		var url = "admin_teacher_course.jsp?teacherid=" + teacherid +"&teachername="+ teachername;
+    		window.location.href=url;
+    		//window.open(url);
+    	}
+    </script>
+
     <script type="text/javascript">
         function loadInfoTable(){
             $.ajax({
@@ -29,13 +37,17 @@
                         var teachername = data[index].teachername;
                         var password = data[index].password;
                         var description = data[index].description;
-                        tt =	"<tr>"
+                        tt = "<tr>"
                             +"<td>"+teacherid+"</td>"
                             +"<td>"+teachername+"</td>"
                             +"<td>"+password+"</td>"
                             +"<td>"+description+"</td>"
-                            +"<td><button onclick='deleteTeacher("+teacherid+")'>删除</button></td>"
-                            +"<td><button onclick='teacherJumpToCourseSelect("+teacherid+")'>选课</button></td>"
+                            //+"<td><button onclick='deleteTeacher("+teacherid+")'>删除</button></td>"
+                            +'<td><button onclick="deleteTeacher(\''+teacherid+'\')">删除</button></td>'
+                            //下面两句都能拼出来，第一句是单引号，第二句是双引号(存在bug)
+                            //+"<td><button οnclick=\"teacherJumpToCourseSelect('"+teacherid+"','"+teachername+"')\">选课</button></td>"
+                            //+'<td><button onclick=teacherJumpToCourseSelect("'+teacherid+'","'+teachername+'")>选课</button></td>'
+                            +'<td><button onclick="teacherJumpToCourseSelect(\''+teacherid+'\',\''+teachername+'\')">选课</button></td>'
                             +"</tr>";
                         $("#insertPlace").append(tt);
                     });
@@ -113,13 +125,6 @@
         }
     </script>
     
-    <script type="text/javascript">
-    	function teacherJumpToCourseSelect(teacherid){
-    		var url = "admin_teacher_course.jsp?teacherid=" + teacherid;
-    		window.location.href=url;
-    		//window.open(url);
-    	}
-    </script>
 </head>
 
 
@@ -149,28 +154,32 @@
         </div>
     </div>
     <div class="container clearf">
-        <table border="1">
-            <thead>
-            <tr>
-                <th>工号</th>
-                <th>姓名</th>
-                <th>密码</th>
-                <th>简介</th>
-                <th>点击删除</th>
-                <th>点击选课</th>
-            </tr>
-            </thead>
-
-            <tbody id="insertPlace">
-            </tbody>
-        </table>
-        <h3>添加教师</h3>
-        	工号：<input id="teacherid" name="teacherid"type="text"value="">
-        	姓名：<input id="teachername" name="teachername"type="text"value="">
-       	 	密码：<input id="password" name="password"type="text"value="">
-        	简介：<input id="description" name="description"type="text"value="">
-        <br>
-        <button id="insertTeacher" type="submit">添加教师</button>
+    	<div class="col-5">
+	    	<table border="1">
+	            <thead>
+	            <tr>
+	                <th>工号</th>
+	                <th>姓名</th>
+	                <th>密码</th>
+	                <th>简介</th>
+	                <th>点击删除</th>
+	                <th>点击选课</th>
+	            </tr>
+	            </thead>
+	
+	            <tbody id="insertPlace">
+	            </tbody>
+	        </table>
+    	</div>
+        <div class="col-5">
+	        <h3>添加教师</h3>
+	        	工号：<input id="teacherid" name="teacherid"type="text"value=""><br>
+	        	姓名：<input id="teachername" name="teachername"type="text"value=""><br>
+	       	 	密码：<input id="password" name="password"type="text"value=""><br>
+	        	简介：<input id="description" name="description"type="text"value=""><br>
+	        <br>
+	        <button id="insertTeacher" type="submit">添加教师</button>
+        </div>
     </div>
 </div>
 </body>
