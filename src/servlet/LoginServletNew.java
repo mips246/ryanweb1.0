@@ -22,7 +22,7 @@ public class LoginServletNew extends HttpServlet {
     private final String errorCode = "-1";
     private final String successCode = "0";
     String studentpath="main.jsp";
-    String teacherpath="teachermain.jsp";
+    String teacherpath="teacher/teacher.jsp";
 	String pathfalse="login.jsp";
 	String adminpath="admin/admin.jsp";
 	
@@ -68,12 +68,16 @@ public class LoginServletNew extends HttpServlet {
 				getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
 				return ;
     		}else {
-    			req.setAttribute("u_error", successCode);
-    			req.setAttribute("u_name", user.getName());
+    			//req.setAttribute("u_error", successCode);
+    			//req.setAttribute("u_name", user.getName());
+    			//req.setAttribute("u_description", user.getDescription());
     			info.add("µÇÂ½³É¹¦£¬»¶Ó­"+user.getName());
 				HttpSession hs=req.getSession();
 				hs.setAttribute("userid", userid);
 				hs.setAttribute("role", role);
+				hs.setAttribute("u_error", successCode);
+				hs.setAttribute("u_name", user.getName());
+				hs.setAttribute("u_description", user.getDescription());
     			//req.getRequestDispatcher(teacherpath).forward(req,resp);
     			resp.sendRedirect(teacherpath);
     		}

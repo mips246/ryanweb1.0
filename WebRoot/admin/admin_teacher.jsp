@@ -17,8 +17,8 @@
 	<script type="text/javascript">
     	function teacherJumpToCourseSelect(teacherid,teachername){
     		var url = "admin_teacher_course.jsp?teacherid=" + teacherid +"&teachername="+ teachername;
-    		window.location.href=url;
-    		//window.open(url);
+    		//window.location.href=url;
+    		window.open(url);
     	}
     </script>
 
@@ -148,7 +148,7 @@
             </div>
             <div class="fr">
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">退出</button></a>
+                    <a href="../logout.jsp"><button type="button" class="btn btn-primary">退出</button></a>
                 </div>
             </div>
         </div>
