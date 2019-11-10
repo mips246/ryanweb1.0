@@ -3,8 +3,7 @@ package vo;
 public class CourseSelect {
 	private String courseid;
 	private String userid;
-	private String homeworkurl;
-	private String reporturl;
+	private int grade;
 	public String getCourseid() {
 		return courseid;
 	}
@@ -17,17 +16,11 @@ public class CourseSelect {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public String getHomeworkurl() {
-		return homeworkurl;
+	public int getGrade() {
+		return grade;
 	}
-	public void setHomeworkurl(String homeworkurl) {
-		this.homeworkurl = homeworkurl;
-	}
-	public String getReporturl() {
-		return reporturl;
-	}
-	public void setReporturl(String reporturl) {
-		this.reporturl = reporturl;
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 	
 }

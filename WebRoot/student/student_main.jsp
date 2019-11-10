@@ -24,15 +24,15 @@
             <div class="item">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">课程</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">选课</a>
-                    <a class="dropdown-item" href="#">上课</a>
+                    <a class="dropdown-item" href="student_select_course.jsp">选课</a>
+                    <a class="dropdown-item" href="student_course.jsp">上课</a>
                 </div>
             </div>
             <div class="item">
-                <a href="#"><button type="button" class="btn btn-primary ">首页</button></a>
+                <a href="student_archive.jsp"><button type="button" class="btn btn-primary ">资料</button></a>
             </div>
             <div class="item">
-                <a href="#"><button type="button" class="btn btn-primary ">作业</button></a>
+                <a href="student_homework.jsp"><button type="button" class="btn btn-primary ">作业</button></a>
             </div>
         </div>
         <div class="fr">

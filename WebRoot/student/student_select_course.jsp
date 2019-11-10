@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -11,9 +12,10 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>学生选课</title>
     <script type="text/javascript">
+    	$(document).ready(loadSelectedCourseTable('<%=session.getAttribute("userid")%>'))
         function loadCourseTable() {
             $.ajax({
-                url:"",
+                url:"/MIPS246/StudentServlet",
                 type:"POST",
                 data:{
                     method:"loadCourseTable"
@@ -23,16 +25,19 @@
                     $.each(data,function (index) {
                         var courseid=data[index].courseid;
                         var coursename=data[index].coursename;
-                        var limitcount=data[index].limitcount;
-                        var studentcount=data[index].studentcount;
+                        //var limitcount=data[index].limitcount;
+                        //var studentcount=data[index].studentcount;
+                        //var teacherid=data[index].teacherid;
                         var teachername=data[index].teachername;
+                        var studentid='<%=session.getAttribute("userid")%>';
                         var tt="<tr>"
                         +"<td>"+courseid+"</td>"
                         +"<td>"+coursename+"</td>"
-                        +"<td>"+limitcount+"</td>"
-                        +"<td>"+studentcount+"</td>"
+                        //+"<td>"+limitcount+"</td>"
+                        //+"<td>"+studentcount+"</td>"
+                        //+"<td>"+teacherid+"</td>"
                         +"<td>"+teachername+"</td>"
-                        +"<td><button onclick='selectCourse(\''+courseid+'\',\''+studentid+'\',\''+teacherid+'\')'>选课</button></td></tr>";
+                        +'<td><button onclick="selectCourse(\''+courseid+'\',\''+studentid+'\')">选课</button></td></tr>';
                         $("#insertPlace").append(tt);
                     })
                 }
@@ -40,7 +45,7 @@
         }
         function selectCourse(courseid,studentid,teacherid) {
             $.ajax({
-                url:"",
+                url:"/MIPS246/StudentServlet",
                 type:"POST",
                 dataType:"json",
                 data:{
@@ -80,13 +85,14 @@
                 }
             })
         }
-        function loadSelectedCourseTable() {
+        function loadSelectedCourseTable(studentid) {
             $.ajax({
-                url:"",
+                url:"/MIPS246/StudentServlet",
                 type:"POST",
                 dataType:"json",
                 data:{
-                    method:"loadCourse"
+                    method:"loadSelectedCourse",
+                    userid:studentid
                 },
                 success:function (data) {
                     dealData(data);
@@ -100,7 +106,7 @@
             $("#insertPlace2").html("");
             var tt="<tr class=''>"
                 +"<td class=''>课程id</td>"
-                +"<td class=''>课程名</td>"
+                //+"<td class=''>课程名</td>"
                 +"<td class=''>总成绩</td></tr>";
             $("#insertPlace2").append(tt);
             $.each(data,function (index) {
@@ -109,15 +115,15 @@
                 var wholegrade=data[index].wholegrade;
                 tt="<tr class=''>"
                     +"<td class=''>"+courseid+"</td>"
-                    +"<td class=''>"+coursename+"</td>"
+                    //+"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+wholegrade+"</td>"
-                    +"<td><button onclick='quitCourse(\''+courseid+'\',\''+studentid+'\',\''+teacherid+'\')'>退课</button></td></tr>";
+                    +'<td><button onclick="quitCourse(\''+courseid+'\',\''+studentid+'\')">退课</button></td></tr>';
                 $("#insertPlace2").append(tt);
             })
         }
     </script>
 </head>
-<body>
+<body onload="loadCourseTable()">
 <div class="container clearf">
     <div class="top-nav clearf">
         <div class="fl">
@@ -155,8 +161,8 @@
             <tr>
                 <th>课程ID</th>
                 <th>课程名</th>
-                <th>限选人数</th>
-                <th>已选人数</th>
+                <!--<th>限选人数</th>
+                <th>已选人数</th>  -->
                 <th>授课教师</th>
                 <th>选课</th>
             </tr>
@@ -168,15 +174,7 @@
     <div class="col-5">
         <h3 align="center">已选列表</h3>
         <table border="1" align="center">
-            <thead>
-            <tr>
-                <th>课程ID</th>
-                <th>课程名</th>
-                <th>总成绩</th>
-                <th>选项</th>
-            </tr>
-            </thead>
-            <tbody id="insertPlace2">
+         	<tbody id="insertPlace2">
             </tbody>
         </table>
     </div>

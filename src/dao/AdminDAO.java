@@ -255,7 +255,7 @@ public class AdminDAO extends BaseDAO{
     	}finally{
     		closeConnect();
     	}
-    	return u;
+    	return null;
 	}
 	public static JSONArray getCourseList() throws SQLException, JSONException {
 		JSONArray courselist=new JSONArray();

@@ -21,7 +21,7 @@ public class LoginServletNew extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private final String errorCode = "-1";
     private final String successCode = "0";
-    String studentpath="main.jsp";
+    String studentpath="student/student_main.jsp";
     String teacherpath="teacher/teacher.jsp";
 	String pathfalse="login.jsp";
 	String adminpath="admin/admin.jsp";
@@ -37,7 +37,6 @@ public class LoginServletNew extends HttpServlet {
     	List<String>info=new ArrayList<String>();
     	resp.setContentType("application/json");
     	resp.setCharacterEncoding("utf-8");
-    	resp.setStatus(resp.SC_MOVED_TEMPORARILY);
     	String role=req.getParameter("role");
     	String userid=req.getParameter("userid");
     	String password=req.getParameter("userpass");
@@ -49,7 +48,10 @@ public class LoginServletNew extends HttpServlet {
     			System.out.println("login fail");
     			req.setAttribute("u_error", errorCode);
     			info.add("µÇÂ½Ê§°Ü");
-    			req.getRequestDispatcher(pathfalse).forward(req,resp);
+    			//req.getRequestDispatcher(pathfalse).forward(req,resp);
+    			resp.sendRedirect(pathfalse);
+    			return;
+    			
     		}else {
     			req.setAttribute("u_error", successCode);
     			req.setAttribute("u_id", user.getUserid());
@@ -65,7 +67,8 @@ public class LoginServletNew extends HttpServlet {
     		if(user==null) {
     			System.out.println("login failed :"+userid);
 				req.setAttribute("u_error", errorCode);
-				getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+				//getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+				resp.sendRedirect(pathfalse);
 				return ;
     		}else {
     			//req.setAttribute("u_error", successCode);
