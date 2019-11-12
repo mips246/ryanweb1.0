@@ -23,7 +23,7 @@ public class Admin {
 		this.name = name;
 	}
 	public boolean isValid(String pwd) {
-		if(pwd==password) {
+		if(pwd.equals(password)) {
 			return true;
 		}
 		return false;

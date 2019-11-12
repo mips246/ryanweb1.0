@@ -10,8 +10,46 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>教师主页</title>
+    
+    <script type="text/javascript">
+        function loadInfoTable(){
+        	var teacherid = '<%=session.getAttribute("userid")%>';
+            $.ajax({
+                url:"/MIPS246/AdminTeacherCourseServlet",
+                type:"POST",
+                data:{
+                    method:"selectTheTeacherCourse",
+                    teacherid:teacherid
+                },
+                dataType:"json",
+                success:function(data){
+                    $.each(data, function (index) {
+                        var courseid = data[index].courseid;
+                        var coursename = data[index].coursename;
+
+                        tt = "<tr>"
+                            +"<td>"+courseid+"</td>"
+                            +"<td>"+coursename+"</td>"
+                            +'<td><button onclick="manageCourse(\''+courseid+'\')">管理课程</button></td>'
+                            +'<td><button onclick="manageStudent(\''+courseid+'\')">管理学生</button></td>'
+                            +"</tr>";
+                        $("#insertPlace").append(tt);
+                    });
+                }
+            });
+        }
+    </script>
+    
+    <script type="text/javascript">
+    	function manageCourse(courseid){
+    		var url = "teacher_course_manage.jsp?courseid=" + courseid;
+    		window.location.href=url;
+    		//window.open(url);
+    	}
+    </script>
+    
 </head>
-<body>
+<body onload="loadInfoTable()">
 <!--教师主页分为3（暂定）个组件，
 组件1首页用来展示教师的个人信息，并且提供修改密码的功能，
 组件2课程管理用来展示课程，并且可以对某个课程上传作业，视频
@@ -27,7 +65,7 @@
                     </div>
                     <div class="item">
                         <a href="teacher_course.jsp"><button type="button" class="btn btn-primary">课程管理</button></a>
-                    </div>
+                    </div>  
                 </div>
                 <div class="fr">
                 	<div class="item">
@@ -40,9 +78,21 @@
             </div>
         </div>
         <div class="container clearf">
-       	<button>${sessionScope.u_name}</button>
-        
-        
+
+			<table border="1">
+	            <thead>
+	            <tr>
+	                <th>课程号</th>
+	                <th>课程名</th>
+	                <th>课程管理</th>
+	                <th>学生管理</th>
+	            </tr>
+	            </thead>
+	
+	            <tbody id="insertPlace">
+	            </tbody>
+	        </table>
+
         </div>
     </div>
 </body>

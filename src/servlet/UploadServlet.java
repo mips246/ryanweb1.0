@@ -38,7 +38,8 @@ public class UploadServlet extends HttpServlet {
     
      //上传数据及保存文件
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 检测是否为multipart/form-data上传，如果不是则停止
+        System.out.println("< Upload >");
+    	// 检测是否为multipart/form-data上传，如果不是则停止
         if (!ServletFileUpload.isMultipartContent(request)) {
             PrintWriter writer = response.getWriter();
             writer.println("Error: 表单必须包含 enctype=multipart/form-data");
@@ -64,11 +65,16 @@ public class UploadServlet extends HttpServlet {
         //System.out.println(uploadPath);
         //String outerpath = "E:\\Myeclipse_program\\MIPS246\\WebRoot";
         String 	outerpath	  = System.getProperty("user.dir") + File.separator + "WebRoot";	//最外层文件夹
-        String 	courseid	  = (String) request.getAttribute("courseid");						//取课程id作为外层文件夹名
-        String 	roletype      = (String) request.getAttribute("roletype");						//取登陆用户的角色类型
-        String 	userid 	 	  = null;															//取用户id为内层文件夹名
-        int		filetype 	  = (int) request.getAttribute("filetype");							//表示文件类型
-        int 	coursesection = (int) request.getAttribute("coursesection");					//表示课程小节
+        String 	courseid	  = (String) request.getParameter("courseid");						//取课程id作为外层文件夹名
+        String 	roletype      = (String) request.getParameter("roletype");						//取登陆用户的角色类型
+        
+        System.out.println("outerpath:"+outerpath);
+        System.out.println("courseid:"+courseid);
+        System.out.println("roletype:"+roletype);
+        
+        String 	userid 	 	  = null;														//取用户id为内层文件夹名
+        int		filetype 	  = Integer.parseInt(request.getParameter("filetype")) ;							//表示文件类型
+        int 	coursesection = Integer.parseInt(request.getParameter("coursesection")) ;					//表示课程小节
         
         MyFile myfile = new MyFile();
         myfile.setFiletype(filetype);
@@ -77,12 +83,16 @@ public class UploadServlet extends HttpServlet {
         myfile.setGrade(-1);
         
         if (roletype.equals("student")) {
-        	userid = (String) request.getAttribute("studentid");
+        	System.out.println("< Student Upload >");
+        	
+        	userid = (String) request.getParameter("studentid");
         	myfile.setStudentid(userid);
         	myfile.setTeacherid(null);
         }
         else if (roletype.equals("teacher")) {
-        	userid = (String) request.getAttribute("teacherid");
+        	System.out.println("< Teacher Upload >");
+        	
+        	userid = (String) request.getParameter("teacherid");
         	myfile.setStudentid(null);
         	myfile.setTeacherid(userid);
         }
@@ -112,6 +122,8 @@ public class UploadServlet extends HttpServlet {
                 for (FileItem item : formItems) {
                     // 处理不在表单中的字段
                     if (!item.isFormField()) {
+                    	System.out.println("< Get File >");
+                    	
                     	//第一个getname()返回值有时只是文件名，有时是绝对路径
                         String filename = new File(item.getName()).getName();//文件名file_name
                         String filePath = uploadpath + File.separator + filename;//文件的绝对路径，file_url
@@ -132,6 +144,9 @@ public class UploadServlet extends HttpServlet {
             }
         } catch (Exception ex) {
             request.setAttribute("message", "错误信息: " +  ex.getMessage());
+        }
+        if(roletype.equals("teacher")) {
+        	getServletContext().getRequestDispatcher("/teacher/teacher_course_manage.jsp").forward(request, response);// 跳转
         }
         getServletContext().getRequestDispatcher("/homework1.jsp").forward(request, response);// 跳转
     }

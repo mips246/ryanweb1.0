@@ -84,7 +84,7 @@
                         <a href="teacher.jsp"><button type="button" class="btn btn-primary">首页</button></a>
                     </div>
                     <div class="item">
-                        <a href=""><button type="button" class="btn btn-primary">课程管理</button></a>
+                        <a href="teacher_course.jsp"><button type="button" class="btn btn-primary">课程管理</button></a>
                     </div>
                 </div>
                 <div class="fr">
