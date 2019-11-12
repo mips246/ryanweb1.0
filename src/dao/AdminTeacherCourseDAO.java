@@ -53,4 +53,24 @@ public class AdminTeacherCourseDAO extends BaseDAO{
 		return selectedCourseList;
 		
 	}
+	
+	//查询指定id的老师的课
+	public static JSONArray getTheTeacherCourseList(String teacherid) throws SQLException, JSONException {
+		JSONArray teachercourselist = new JSONArray();
+    	String sql = "SELECT * FROM courseteacher where teacherid = ?;";
+    	openConnection();
+		pstmt = getPStatement(sql);
+		
+		pstmt.setString(1, teacherid);
+		ResultSet result = pstmt.executeQuery();
+		while(result.next()){
+			JSONObject obj= new JSONObject ();
+			obj.put("courseid", result.getString("courseid"));
+			obj.put("coursename", result.getString("coursename"));
+			teachercourselist.put(obj);
+		}
+		result.close();
+		closeConnect();
+		return teachercourselist;
+	}
 }

@@ -76,10 +76,24 @@ public class AdminTeacherCourseServlet extends HttpServlet {
 			}
         	
 		}
+		
 		else if("loadCourse".equals(method)) {
 			System.out.println("< Addmin Teacher Load All Course Table >");
 			try{
 				jsonArray = AdminDAO.getCourseList();
+			}catch(SQLException|JSONException e) {
+				e.printStackTrace();
+			}
+			out.println(jsonArray);
+		}
+		
+		else if("selectTheTeacherCourse".equals(method)) {//遍历给定teacherid的老师的课
+			System.out.println("< Load The Teacher Course Table >");
+			
+			String teacherid = request.getParameter("teacherid");
+			
+			try{
+				jsonArray = AdminTeacherCourseDAO.getTheTeacherCourseList(teacherid);
 			}catch(SQLException|JSONException e) {
 				e.printStackTrace();
 			}
