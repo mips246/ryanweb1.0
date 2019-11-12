@@ -13,10 +13,11 @@ public class StudentCourseDAO extends BaseDAO{
 	public StudentCourseDAO() {}
 	public static boolean insertCourse(CourseSelect cs) throws SQLException {
 		openConnection();
-		String sql="insert into courseselect values(?,?,null);";
+		String sql="insert into courseselect values(?,?,null,?);";
 		pstmt=getPStatement(sql);
 		pstmt.setString(1, cs.getCourseid());
 		pstmt.setString(2, cs.getUserid());
+		pstmt.setString(3, cs.getTeacherid());
 		int flag=pstmt.executeUpdate();
 		closeConnect();
 		if(flag==1) {
@@ -27,19 +28,23 @@ public class StudentCourseDAO extends BaseDAO{
 	}
 	public static JSONArray getSelectedCourseTable(String userid) throws SQLException, JSONException {
 		openConnection();
-		String sql = "SELECT * FROM courseselect WHERE studentid=?;";
-		//String sql ="select * from courseselect where studentid=?;";
+		String sql = "SELECT * FROM courseselect;";
+		//String sql ="select * from courseselect where studentid = ?;";
 		pstmt=getPStatement(sql);
 		//pstmt.setString(1, "courseid");
 		//pstmt.setString(2, "grade");
-		pstmt.setString(1, userid);
+		//pstmt.setString(1, userid);
 		ResultSet result=pstmt.executeQuery(sql);
 		JSONArray selectedcoursetable=new JSONArray();
 		JSONObject obj=new JSONObject();
 		while(result.next()) {
-			obj.append("courseid", result.getString("courseid"));
-			obj.append("grade", result.getString("grade"));
-			selectedcoursetable.put(obj);
+			if(result.getString("studentid").equals(userid)) {
+				obj.append("studentid", result.getString("studentid"));
+				obj.append("courseid", result.getString("courseid"));
+				obj.append("grade", result.getString("grade"));
+				obj.append("teacherid",result.getString("teacherid"));
+				selectedcoursetable.put(obj);
+			}
 		}
 		return selectedcoursetable;
 	}

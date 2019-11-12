@@ -86,6 +86,7 @@ public class LoginServletNew extends HttpServlet {
     		}
     	}else if(role.equals("admin")) {
     		Admin user=AdminDAO.login(userid,password);
+    		System.out.println(user);
     		if(user==null) {
     			System.out.println("login failed :"+userid);
 				req.setAttribute("u_error", errorCode);

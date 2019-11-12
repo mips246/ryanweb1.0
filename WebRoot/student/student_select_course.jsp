@@ -27,7 +27,7 @@
                         var coursename=data[index].coursename;
                         //var limitcount=data[index].limitcount;
                         //var studentcount=data[index].studentcount;
-                        //var teacherid=data[index].teacherid;
+                        var teacherid=data[index].teacherid;
                         var teachername=data[index].teachername;
                         var studentid='<%=session.getAttribute("userid")%>';
                         var tt="<tr>"
@@ -35,9 +35,9 @@
                         +"<td>"+coursename+"</td>"
                         //+"<td>"+limitcount+"</td>"
                         //+"<td>"+studentcount+"</td>"
-                        //+"<td>"+teacherid+"</td>"
                         +"<td>"+teachername+"</td>"
-                        +'<td><button onclick="selectCourse(\''+courseid+'\',\''+studentid+'\')">选课</button></td></tr>';
+                        //+"<td>"+teachername+"</td>"
+                        +'<td><button onclick="selectCourse(\''+courseid+'\',\''+studentid+'\',\''+teacherid+'\')">选课</button></td></tr>';
                         $("#insertPlace").append(tt);
                     })
                 }
@@ -107,17 +107,19 @@
             var tt="<tr class=''>"
                 +"<td class=''>课程id</td>"
                 //+"<td class=''>课程名</td>"
-                +"<td class=''>总成绩</td></tr>";
+                +"<td class=''>总成绩</td>"
+                +"<td class=''>选项</td></tr>";
             $("#insertPlace2").append(tt);
             $.each(data,function (index) {
                 var courseid=data[index].courseid;
                 var coursename=data[index].coursename;
-                var wholegrade=data[index].wholegrade;
+                var wholegrade=data[index].grade;
+                console.log(wholegrade);
                 tt="<tr class=''>"
                     +"<td class=''>"+courseid+"</td>"
                     //+"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+wholegrade+"</td>"
-                    +'<td><button onclick="quitCourse(\''+courseid+'\',\''+studentid+'\')">退课</button></td></tr>';
+                    +'<td><button onclick="quitCourse(\''+courseid+'\')">退课</button></td></tr>';
                 $("#insertPlace2").append(tt);
             })
         }

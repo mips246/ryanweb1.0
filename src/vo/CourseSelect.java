@@ -3,6 +3,7 @@ package vo;
 public class CourseSelect {
 	private String courseid;
 	private String userid;
+	private String teacherid;
 	private int grade;
 	public String getCourseid() {
 		return courseid;
@@ -22,5 +23,12 @@ public class CourseSelect {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+	public String getTeacherid() {
+		return teacherid;
+	}
+	public void setTeacherid(String teacherid) {
+		this.teacherid = teacherid;
+	}
+	
 	
 }

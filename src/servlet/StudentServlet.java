@@ -19,6 +19,10 @@ import dao.StudentCourseDAO;
 import vo.CourseSelect;
 
 public class StudentServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("../errorpage.jsp").forward(req, resp);
 		//doPost(req,resp);
@@ -47,11 +51,12 @@ public class StudentServlet extends HttpServlet {
 		else if("selectCourse".equals(method)) {
 			System.out.println("进入了studentservlet的selectCourse分支");
 			String selectedcourseid=req.getParameter("courseid");
-			//String selectedteacherid=req.getParameter("teacherid");
+			String selectedteacherid=req.getParameter("teacherid");
 			String studentid=req.getParameter("studentid");
 			CourseSelect cs= new CourseSelect();
 			cs.setCourseid(selectedcourseid);
 			cs.setUserid(studentid);
+			cs.setTeacherid(selectedteacherid);
 			cs.setGrade(0);
 			boolean flag;
 			try {
