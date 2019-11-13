@@ -36,7 +36,7 @@
         }
         function seeHomework(courseid,teacherid) {
             $.ajax({
-                url:"/MIPS246/FileServlet",
+                url:"/MIPS246/DowloadServlet",
                 type:"POST",
                 dataType:"json",
                 data:{
@@ -104,7 +104,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-8">
+        <div class="col-4">
             <table border="1" align="center">
                 <thead>
                 <tr>

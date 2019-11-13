@@ -1,6 +1,11 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import vo.MyFile;
 
@@ -21,12 +26,32 @@ public class FileDAO extends BaseDAO{
 			pstmt.setString(8, myfile.getFilename());
 			pstmt.executeUpdate();
 			
-			System.out.println("< Writr Into DataBase >");
+			System.out.println("< Write Into DataBase >");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 				closeConnect();
 		}
 	}
-
+	public static JSONArray getCourseArchiveTable(MyFile file) throws SQLException, JSONException {
+		openConnection();
+		String courseid=file.getCourseid();
+		String teacherid=file.getTeacherid();
+		String sql="select * from file where courseid = ? and teacherid = ? and studentid = ? and filetype = ?;";
+		pstmt=getPStatement(sql);
+		pstmt.setString(1, courseid);
+		pstmt.setString(2, teacherid);
+		pstmt.setString(3, null);
+		pstmt.setInt(4, file.getFiletype());
+		ResultSet result=pstmt.executeQuery();
+		JSONArray coursearchivetable =new JSONArray();
+		JSONObject obj =new JSONObject();
+		while(result.next()) {
+			 obj.append("fileurl", result.getString("fileurl"));
+			 obj.append("filename", result.getString("filename"));
+			 obj.append("teacherid", result.getString("teacherid"));
+			 coursearchivetable.put(obj);
+		}
+		return coursearchivetable;
+	}
 }

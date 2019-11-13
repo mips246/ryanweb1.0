@@ -28,13 +28,13 @@ public class StudentCourseDAO extends BaseDAO{
 	}
 	public static JSONArray getSelectedCourseTable(String userid) throws SQLException, JSONException {
 		openConnection();
-		String sql = "SELECT * FROM courseselect;";
-		//String sql ="select * from courseselect where studentid = ?;";
+		//String sql = "SELECT * FROM courseselect;";
+		String sql ="select * from courseselect where studentid = ?;";
 		pstmt=getPStatement(sql);
 		//pstmt.setString(1, "courseid");
 		//pstmt.setString(2, "grade");
-		//pstmt.setString(1, userid);
-		ResultSet result=pstmt.executeQuery(sql);
+		pstmt.setString(1, userid);
+		ResultSet result=pstmt.executeQuery();
 		JSONArray selectedcoursetable=new JSONArray();
 		JSONObject obj=new JSONObject();
 		while(result.next()) {
