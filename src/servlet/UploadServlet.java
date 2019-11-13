@@ -133,6 +133,7 @@ public class UploadServlet extends HttpServlet {
         String roletype 	 = null;
         String userid		 = null;
         String uploadpath    = null;
+        String reurl		 = null;//相对路径
         int	   filetype 	 = 0;
         int	   coursesection = 1;
         
@@ -161,8 +162,10 @@ public class UploadServlet extends HttpServlet {
                         String filetime = time.toString();//文件最后修改时间（创建时间）,create_time
                         request.setAttribute("message","文件上传成功!");
                         
+                        reurl += File.separator + filename;//相对路径
+                        
                         myfile.setCreatetime(filetime);
-                        myfile.setFileurl(filePath);
+                        myfile.setFileurl(reurl);
                         myfile.setFilename(filename);
                         
                         System.out.println("createtime:"+filetime);
@@ -213,6 +216,8 @@ public class UploadServlet extends HttpServlet {
                     		
                     		//构建最终存储路径
                     		uploadpath = outerpath + File.separator + courseid + File.separator + userid;
+                    		//构建相对路径
+                    		reurl = File.separator + "WebRoot" + File.separator + courseid + File.separator + userid;
                     		// 如果目录不存在则创建
                             File uploadDir = new File(uploadpath);
                             if (!uploadDir.exists()) {
