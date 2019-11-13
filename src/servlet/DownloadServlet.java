@@ -44,12 +44,15 @@ public class DownloadServlet extends HttpServlet {
 		String method=req.getParameter("method");
 		String courseid=req.getParameter("courseid");
 		String teacherid=req.getParameter("teacherid");
+		resp.setContentType("application/json");
+    	resp.setCharacterEncoding("utf-8");
 		PrintWriter out= resp.getWriter();
 		if(method.equals("loadFileTable")) {
+			System.out.println("½øÈëloadfiletable");
 			MyFile file=new MyFile();
 			file.setCourseid(courseid);
 			file.setTeacherid(teacherid);
-			file.setFiletype(3);
+			file.setFiletype(0);
 			JSONArray coursearchivetable=new JSONArray();
 			try {
 				coursearchivetable=FileDAO.getCourseArchiveTable(file);
@@ -60,6 +63,7 @@ public class DownloadServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			//System.out.println(coursearchivetable);
 			out.println(coursearchivetable);
 		}
 	}

@@ -12,7 +12,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>学生选课</title>
     <script type="text/javascript">
-    	$(document).ready(loadSelectedCourseTable('<%=session.getAttribute("userid")%>'))
+    	$(document).ready(loadStudentSelectedCourseTable('<%=session.getAttribute("userid")%>'))
         function loadCourseTable() {
             $.ajax({
                 url:"/MIPS246/StudentServlet",
@@ -85,7 +85,7 @@
                 }
             })
         }
-        function loadSelectedCourseTable(studentid) {
+        function loadStudentSelectedCourseTable(studentid) {
             $.ajax({
                 url:"/MIPS246/StudentServlet",
                 type:"POST",
@@ -135,21 +135,21 @@
             <div class="item">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">课程</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">选课</a>
-                    <a class="dropdown-item" href="#">上课</a>
+                    <a class="dropdown-item" href="student_select_course.jsp">选课</a>
+                    <a class="dropdown-item" href="student_course.jsp">上课</a>
                 </div>
             </div>
             <div class="item">
-                <a href="#"><button type="button" class="btn btn-primary ">课程资料</button></a>
+                <a href="student_archive.jsp"><button type="button" class="btn btn-primary ">课程资料</button></a>
             </div>
             <div class="item">
-                <a href="#"><button type="button" class="btn btn-primary ">作业</button></a>
+                <a href="student_homework.jsp"><button type="button" class="btn btn-primary ">作业</button></a>
             </div>
         </div>
         <div class="fr">
             <div class="item">
                 <!--<button type="button" class="btn btn-primary"><a href="logout.jsp">退出</a></button>只能a标签套button，button不能套a  -->
-                <a href="logout.jsp"><button type="button" class="btn btn-primary ">退出</button></a>
+                <a href="../logout.jsp"><button type="button" class="btn btn-primary ">退出</button></a>
                 <a href="info.jsp"><button type="button" class="btn btn-primary ">个人信息修改</button></a>
             </div>
         </div>

@@ -37,21 +37,23 @@ public class FileDAO extends BaseDAO{
 		openConnection();
 		String courseid=file.getCourseid();
 		String teacherid=file.getTeacherid();
-		String sql="select * from file where courseid = ? and teacherid = ? and studentid = ? and filetype = ?;";
+		String sql="select * from file where courseid = ? and teacherid = ? and studentid is null and file_type = ?;";
 		pstmt=getPStatement(sql);
 		pstmt.setString(1, courseid);
 		pstmt.setString(2, teacherid);
-		pstmt.setString(3, null);
-		pstmt.setInt(4, file.getFiletype());
+		//pstmt.setString(3, null);
+		pstmt.setInt(3, file.getFiletype());
 		ResultSet result=pstmt.executeQuery();
 		JSONArray coursearchivetable =new JSONArray();
-		JSONObject obj =new JSONObject();
 		while(result.next()) {
-			 obj.append("fileurl", result.getString("fileurl"));
-			 obj.append("filename", result.getString("filename"));
+			 JSONObject obj =new JSONObject();
+			 obj.append("fileurl", result.getString("file_url"));
+			 obj.append("filename", result.getString("file_name"));
 			 obj.append("teacherid", result.getString("teacherid"));
+			 System.out.println(result.getString("file_url"));
 			 coursearchivetable.put(obj);
 		}
+		
 		return coursearchivetable;
 	}
 }

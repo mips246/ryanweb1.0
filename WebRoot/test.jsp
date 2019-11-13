@@ -52,5 +52,8 @@
         <tbody id="insertPlace">
         </tbody>
 	</table>
+	<div>
+	<a href="\WebRoot\CS111111\123456\ResNet.pptx" download="resnet">resnet</a>
+	</div>
 </body>
 </html>

@@ -10,15 +10,16 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Title</title>
-    <script>
-        //$(document).ready(loadSelectedCourseTable('<%=session.getAttribute("userid")%>'));
-        $(document).ready(loadCourseTable());
-        function loadCourseTable() {
+    <script type="text/javascript">
+        //$(document).ready(loadCourseTable());
+        function loadStudentSelectCourseTable() {
+        	var userid='<%=session.getAttribute("userid")%>';
             $.ajax({
                 url:"/MIPS246/StudentServlet",
                 type:"POST",
                 data:{
-                    method:"loadSelectedCourse"
+                    method:"x",
+                    userid:userid
                 },
                 dataType:"json",
                 success:function (data) {
@@ -36,15 +37,16 @@
         }
         function seeHomework(courseid,teacherid) {
             $.ajax({
-                url:"/MIPS246/DowloadServlet",
+                url:"/MIPS246/DownloadServlet",
                 type:"POST",
                 dataType:"json",
                 data:{
-                    method:"loadteahcerhomework",
+                    method:"loadFileTable",
                     courseid:courseid,
                     teacherid:teacherid
                 },
                 success:function (data) {
+                  console.log("进入success");
                   dealData(data);
                 },
                 error:function (jqXHR,textStatus,errorThrown) {
@@ -58,12 +60,14 @@
                 var fileurl=data[index].fileurl;
                 var filename=data[index].filename;
                 var tt="<tr>"
-                +"<td><a herf=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td></tr>";
+                +"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td></tr>";
+                $("#insertPlace2").append(tt);
             })
         }
+        //$(document).ready(loadSelectedCourseTable());
     </script>
 </head>
-<body>
+<body onload="loadStudentSelectCourseTable()">
 <div class="container clearf">
     <div class="top-nav clearf">
         <div class="fl">
@@ -73,7 +77,7 @@
             <div class="item">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">课程</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="student_course_select.jsp">选课</a>
+                    <a class="dropdown-item" href="student_select_course.jsp">选课</a>
                     <a class="dropdown-item" href="student_course.jsp">上课</a>
                 </div>
             </div>
@@ -87,7 +91,7 @@
         <div class="fr">
             <div class="item">
                 <!--<button type="button" class="btn btn-primary"><a href="logout.jsp">退出</a></button>  -->
-                <a href="logout.jsp"><button type="button" class="btn btn-primary ">退出</button></a>
+                <a href="../logout.jsp"><button type="button" class="btn btn-primary ">退出</button></a>
                 <a href="info.jsp"><button type="button" class="btn btn-primary ">个人信息修改</button></a>
             </div>
         </div>

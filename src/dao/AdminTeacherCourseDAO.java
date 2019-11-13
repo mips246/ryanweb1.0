@@ -35,21 +35,25 @@ public class AdminTeacherCourseDAO extends BaseDAO{
 		}
 		return false;
 	}
-	public static JSONArray getSelectedCourseList() throws SQLException, JSONException {
+	public static JSONArray getTeacherSelectedCourseList() throws SQLException, JSONException {
 		openConnection();
-		String sql1="select * from courseteacher;";
+		//String sql1="select courseselect.*,courseteacher.* from courseselect,courseteacher where courseselect.courseid=courseteacher.courseid and courseselect.teacherid=courseteacher.teacherid and courseselect.studentid=?;";
 		//String sql2="select * from course;";
-		pstmt=getPStatement(sql1);
-		ResultSet result1=pstmt.executeQuery(sql1);
+		String sql="select * from courseteacher;";
+		pstmt=getPStatement(sql);
+		//pstmt.setString(1, userid);
+		ResultSet result1=pstmt.executeQuery(sql);
 		JSONArray selectedCourseList =new JSONArray();
-		JSONObject obj1=new JSONObject();
+		
 		while(result1.next()) {
+			JSONObject obj1=new JSONObject();
 			obj1.append("courseid", result1.getString("courseid"));
 			obj1.append("coursename", result1.getString("coursename"));
 			obj1.append("teacherid", result1.getString("teacherid"));
 			obj1.append("teachername", result1.getString("teachername"));
 			selectedCourseList.put(obj1);
 		}
+		closeConnect();
 		return selectedCourseList;
 		
 	}

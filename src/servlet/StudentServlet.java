@@ -37,8 +37,9 @@ public class StudentServlet extends HttpServlet {
 		String method=req.getParameter("method");
 		if("loadCourseTable".equals(method)) {
 			JSONArray courseList=new JSONArray();
+			String userid=req.getParameter("userid");
 			try {
-				courseList=AdminTeacherCourseDAO.getSelectedCourseList();
+				courseList=AdminTeacherCourseDAO.getTeacherSelectedCourseList();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,6 +91,17 @@ public class StudentServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			out.println(selectedcoursetable);
+		}
+		else if("x".equals(method)) {
+			String userid= req.getParameter("userid");
+			JSONArray table=new JSONArray();
+			try {
+				table=StudentCourseDAO.getTable(userid);
+			} catch (SQLException | JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			out.println(table);
 		}
 	}
 }

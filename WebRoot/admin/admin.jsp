@@ -34,7 +34,7 @@ request.setCharacterEncoding("GBK");
             </div>
             <div class="fr">
                 <div class="item">
-                    <a href=""><button type="button" class="btn btn-primary">退出</button></a>
+                    <a href="../logout.jsp"><button type="button" class="btn btn-primary">退出</button></a>
                 </div>
             </div>
         </div>

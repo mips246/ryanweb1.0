@@ -36,9 +36,10 @@ public class StudentCourseDAO extends BaseDAO{
 		pstmt.setString(1, userid);
 		ResultSet result=pstmt.executeQuery();
 		JSONArray selectedcoursetable=new JSONArray();
-		JSONObject obj=new JSONObject();
+		
 		while(result.next()) {
 			if(result.getString("studentid").equals(userid)) {
+				JSONObject obj=new JSONObject();
 				obj.append("studentid", result.getString("studentid"));
 				obj.append("courseid", result.getString("courseid"));
 				obj.append("grade", result.getString("grade"));
@@ -47,5 +48,24 @@ public class StudentCourseDAO extends BaseDAO{
 			}
 		}
 		return selectedcoursetable;
+	}
+	public static JSONArray getTable(String userid) throws SQLException, JSONException {
+		openConnection();
+		String sql="select courseselect.*,courseteacher.* from courseselect,courseteacher where courseselect.courseid=courseteacher.courseid and courseselect.teacherid=courseteacher.teacherid and courseselect.studentid=?;";
+		pstmt=getPStatement(sql);
+		pstmt.setString(1, userid);
+		ResultSet result=pstmt.executeQuery();
+		JSONArray table=new JSONArray();
+		while(result.next()) {
+			JSONObject obj1=new JSONObject();
+			obj1.append("courseid", result.getString("courseid"));
+			obj1.append("coursename", result.getString("coursename"));
+			obj1.append("teacherid", result.getString("teacherid"));
+			obj1.append("teachername", result.getString("teachername"));
+			table.put(obj1);
+		}
+		closeConnect();
+		return table;
+		
 	}
 }

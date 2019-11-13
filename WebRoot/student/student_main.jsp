@@ -38,7 +38,7 @@
         <div class="fr">
             <div class="item">
                 <!--<button type="button" class="btn btn-primary"><a href="logout.jsp">退出</a></button>  -->
-                <a href="logout.jsp"><button type="button" class="btn btn-primary ">退出</button></a>
+                <a href="../logout.jsp"><button type="button" class="btn btn-primary ">退出</button></a>
                 <a href="info.jsp"><button type="button" class="btn btn-primary ">个人信息</button></a>
             </div>
         </div>
