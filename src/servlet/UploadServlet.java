@@ -47,6 +47,13 @@ public class UploadServlet extends HttpServlet {
             return;
         }
         
+        //创建暂存目录
+        File tempDir = new File(UPLOAD_TEMP_DIRCTORY);
+        if (!tempDir.exists()) {
+        	tempDir.mkdirs();
+            System.out.println("<Create Folder "+UPLOAD_TEMP_DIRCTORY+" >");
+        }
+        
         // 配置上传参数
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(MEMORY_THRESHOLD);// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
@@ -158,6 +165,10 @@ public class UploadServlet extends HttpServlet {
                         myfile.setFileurl(filePath);
                         myfile.setFilename(filename);
                         
+                        System.out.println("createtime:"+filetime);
+                        System.out.println("filePath:"+filePath);
+                        System.out.println("filename:"+filename);
+                        
                         FileDAO.insert(myfile);
                     }
                     // 处理数据
@@ -166,17 +177,21 @@ public class UploadServlet extends HttpServlet {
                     	if("coursesection".equals(fieldName)) {
                     		coursesection = Integer.parseInt(item.getString());
                     		myfile.setCoursesection(coursesection);
+                    		System.out.println("coursesection:"+coursesection);
                     	}
                     	else if("filetype".equals(fieldName)) {
                     		filetype = Integer.parseInt(item.getString());
                     		myfile.setFiletype(filetype);
+                    		System.out.println("filetype:"+filetype);
                     	}
                     	else if("roletype".equals(fieldName)) {
                     		roletype = item.getString();
+                    		System.out.println("roletype:"+roletype);
                     	}
                     	else if("courseid".equals(fieldName)) {
                     		courseid = item.getString();
                     		myfile.setCourseid(courseid);
+                    		System.out.println("courseid:"+courseid);
                     	}
                     	else if("userid".equals(fieldName)) {
                     		userid = item.getString();
@@ -186,12 +201,14 @@ public class UploadServlet extends HttpServlet {
 
                             	myfile.setStudentid(userid);
                             	myfile.setTeacherid(null);
+                            	System.out.println("userid:"+userid);
                             }
                             else if (roletype.equals("teacher")) {
                             	System.out.println("< Teacher Upload >");
 
                             	myfile.setStudentid(null);
                             	myfile.setTeacherid(userid);
+                            	System.out.println("userid:"+userid);
                             }
                     		
                     		//构建最终存储路径
@@ -199,7 +216,8 @@ public class UploadServlet extends HttpServlet {
                     		// 如果目录不存在则创建
                             File uploadDir = new File(uploadpath);
                             if (!uploadDir.exists()) {
-                                uploadDir.mkdir();
+                                uploadDir.mkdirs();
+                                System.out.println("<Create Folder "+uploadpath+" >");
                             }
                     	}
                     }
@@ -208,10 +226,13 @@ public class UploadServlet extends HttpServlet {
         } catch (Exception ex) {
             request.setAttribute("message", "错误信息: " +  ex.getMessage());
         }
-        if(roletype.equals("teacher")) {
+        getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+        /*
+        if("teacher".equals(roletype)) {
         	//getServletContext().getRequestDispatcher("/teacher/teacher_course_manage.jsp").forward(request, response);// 跳转
-        	getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        	getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
         }
+        */
         //getServletContext().getRequestDispatcher("/homework1.jsp").forward(request, response);// 跳转
     }
 }
