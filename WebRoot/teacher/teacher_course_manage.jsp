@@ -25,7 +25,7 @@
 		function writeData(){
      		var teacherid = '<%=session.getAttribute("userid")%>';
      		var courseid = getUrlParams("courseid");
-     		document.homework.teacherid.value = teacherid;
+     		document.homework.userid.value = teacherid;
      		document.homework.courseid.value = courseid;
 		}
 	</script>
@@ -57,14 +57,15 @@
 
 			<h3>上传作业要求</h3><br>
 				<form name="homework" method="post" action="/MIPS246/UploadServlet" enctype="multipart/form-data">
+					<%-- 一定要把文件 放到最后，这样传到后台的数据也会将文件放到最后 --%>
 					请输入对应的课程小节:
 					<input type="text" name="coursesection"/>
-					请选择一个文件:
-    				<input type="file" name="uploadFile" /><br/><br/>
     				<input type="hidden" name="filetype" value="0"/>
     				<input type="hidden" name="roletype" value="teacher"/>
-    				<input type="hidden" name="teacherid" value=""/>
     				<input type="hidden" name="courseid" value=""/>
+    				<input type="hidden" name="userid" value=""/>
+    				请选择一个文件:
+    				<input type="file" name="uploadFile" /><br/><br/>
     				<input type="submit" value="上传" />
 				</form>
 			<h3>上传课程讲义</h3><br>

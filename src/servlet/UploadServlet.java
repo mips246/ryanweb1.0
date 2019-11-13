@@ -65,23 +65,31 @@ public class UploadServlet extends HttpServlet {
         //System.out.println(uploadPath);
         //String outerpath = "E:\\Myeclipse_program\\MIPS246\\WebRoot";
         String 	outerpath	  = System.getProperty("user.dir") + File.separator + "WebRoot";	//最外层文件夹
+        
+        /*
+         * 错误的写法，无法直接用getParameter取得前端数据
         String 	courseid	  = (String) request.getParameter("courseid");						//取课程id作为外层文件夹名
         String 	roletype      = (String) request.getParameter("roletype");						//取登陆用户的角色类型
+        
         
         System.out.println("outerpath:"+outerpath);
         System.out.println("courseid:"+courseid);
         System.out.println("roletype:"+roletype);
         
+        
         String 	userid 	 	  = null;														//取用户id为内层文件夹名
         int		filetype 	  = Integer.parseInt(request.getParameter("filetype")) ;							//表示文件类型
         int 	coursesection = Integer.parseInt(request.getParameter("coursesection")) ;					//表示课程小节
+        */
         
+        /*
         MyFile myfile = new MyFile();
         myfile.setFiletype(filetype);
         myfile.setCoursesection(coursesection);
         myfile.setCourseid(courseid);
         myfile.setGrade(-1);
-        
+        */
+        /*
         if (roletype.equals("student")) {
         	System.out.println("< Student Upload >");
         	
@@ -102,16 +110,28 @@ public class UploadServlet extends HttpServlet {
             writer.flush();
             return;
         }
+        */
+        /*
         String uploadpath = outerpath + File.separator + courseid + File.separator + userid;//构建最终存储路径
         //String uploadPath = outerpath + "\\" + courseid + "\\" + userid;
-        
         
         // 如果目录不存在则创建
         File uploadDir = new File(uploadpath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
- 
+        */
+        String fieldName	 = null;//记录前端传来的input的名字
+        String courseid 	 = null;
+        String roletype 	 = null;
+        String userid		 = null;
+        String uploadpath    = null;
+        int	   filetype 	 = 0;
+        int	   coursesection = 1;
+        
+        MyFile myfile        = new MyFile();
+        myfile.setGrade(-1);
+        
         try {
             // 解析请求的内容提取文件数据
             @SuppressWarnings("unchecked")
@@ -120,7 +140,7 @@ public class UploadServlet extends HttpServlet {
             if (formItems != null && formItems.size() > 0) {
                 // 迭代表单数据
                 for (FileItem item : formItems) {
-                    // 处理不在表单中的字段
+                    // 处理文件
                     if (!item.isFormField()) {
                     	System.out.println("< Get File >");
                     	
@@ -140,14 +160,58 @@ public class UploadServlet extends HttpServlet {
                         
                         FileDAO.insert(myfile);
                     }
+                    // 处理数据
+                    else {
+                    	fieldName = item.getFieldName();
+                    	if("coursesection".equals(fieldName)) {
+                    		coursesection = Integer.parseInt(item.getString());
+                    		myfile.setCoursesection(coursesection);
+                    	}
+                    	else if("filetype".equals(fieldName)) {
+                    		filetype = Integer.parseInt(item.getString());
+                    		myfile.setFiletype(filetype);
+                    	}
+                    	else if("roletype".equals(fieldName)) {
+                    		roletype = item.getString();
+                    	}
+                    	else if("courseid".equals(fieldName)) {
+                    		courseid = item.getString();
+                    		myfile.setCourseid(courseid);
+                    	}
+                    	else if("userid".equals(fieldName)) {
+                    		userid = item.getString();
+                    		
+                    		if (roletype.equals("student")) {
+                            	System.out.println("< Student Upload >");
+
+                            	myfile.setStudentid(userid);
+                            	myfile.setTeacherid(null);
+                            }
+                            else if (roletype.equals("teacher")) {
+                            	System.out.println("< Teacher Upload >");
+
+                            	myfile.setStudentid(null);
+                            	myfile.setTeacherid(userid);
+                            }
+                    		
+                    		//构建最终存储路径
+                    		uploadpath = outerpath + File.separator + courseid + File.separator + userid;
+                    		// 如果目录不存在则创建
+                            File uploadDir = new File(uploadpath);
+                            if (!uploadDir.exists()) {
+                                uploadDir.mkdir();
+                            }
+                    	}
+                    }
                 }
             }
         } catch (Exception ex) {
             request.setAttribute("message", "错误信息: " +  ex.getMessage());
         }
         if(roletype.equals("teacher")) {
-        	getServletContext().getRequestDispatcher("/teacher/teacher_course_manage.jsp").forward(request, response);// 跳转
+        	//getServletContext().getRequestDispatcher("/teacher/teacher_course_manage.jsp").forward(request, response);// 跳转
+        	getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
-        getServletContext().getRequestDispatcher("/homework1.jsp").forward(request, response);// 跳转
+        //getServletContext().getRequestDispatcher("/homework1.jsp").forward(request, response);// 跳转
     }
 }

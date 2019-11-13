@@ -20,6 +20,8 @@ public class FileDAO extends BaseDAO{
 			pstmt.setString(7, myfile.getCreatetime());
 			pstmt.setString(8, myfile.getFilename());
 			pstmt.executeUpdate();
+			
+			System.out.println("< Writr Into DataBase >");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
