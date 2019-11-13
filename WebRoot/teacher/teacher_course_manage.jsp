@@ -27,6 +27,12 @@
      		var courseid = getUrlParams("courseid");
      		document.homework.userid.value = teacherid;
      		document.homework.courseid.value = courseid;
+     		
+     		document.ppt.userid.value = teacherid;
+     		document.ppt.courseid.value = courseid;
+     		
+     		document.video.userid.value = teacherid;
+     		document.video.courseid.value = courseid;
 		}
 	</script>
     
@@ -69,7 +75,29 @@
     				<input type="submit" value="上传" />
 				</form>
 			<h3>上传课程讲义</h3><br>
+				<form name="ppt" method="post" action="/MIPS246/UploadServlet" enctype="multipart/form-data">
+					请输入对应的课程小节:
+					<input type="text" name="coursesection"/>
+    				<input type="hidden" name="filetype" value="3"/>
+    				<input type="hidden" name="roletype" value="teacher"/>
+    				<input type="hidden" name="courseid" value=""/>
+    				<input type="hidden" name="userid" value=""/>
+    				请选择一个文件:
+    				<input type="file" name="uploadFile" /><br/><br/>
+    				<input type="submit" value="上传" />
+				</form>
 			<h3>上传课程视频</h3><br>
+				<form name="video" method="post" action="/MIPS246/UploadServlet" enctype="multipart/form-data">
+					请输入对应的课程小节:
+					<input type="text" name="coursesection"/>
+    				<input type="hidden" name="filetype" value="1"/>
+    				<input type="hidden" name="roletype" value="teacher"/>
+    				<input type="hidden" name="courseid" value=""/>
+    				<input type="hidden" name="userid" value=""/>
+    				请选择一个文件:
+    				<input type="file" name="uploadFile" /><br/><br/>
+    				<input type="submit" value="上传" />
+				</form>
 
         </div>
     </div>

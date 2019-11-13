@@ -47,6 +47,13 @@ public class UploadServlet extends HttpServlet {
             return;
         }
         
+        //创建暂存目录
+        File tempDir = new File(UPLOAD_TEMP_DIRCTORY);
+        if (!tempDir.exists()) {
+        	tempDir.mkdirs();
+            System.out.println("<Create Folder "+UPLOAD_TEMP_DIRCTORY+" >");
+        }
+        
         // 配置上传参数
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(MEMORY_THRESHOLD);// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
@@ -219,10 +226,13 @@ public class UploadServlet extends HttpServlet {
         } catch (Exception ex) {
             request.setAttribute("message", "错误信息: " +  ex.getMessage());
         }
-        if(roletype.equals("teacher")) {
+        getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+        /*
+        if("teacher".equals(roletype)) {
         	//getServletContext().getRequestDispatcher("/teacher/teacher_course_manage.jsp").forward(request, response);// 跳转
         	getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
         }
+        */
         //getServletContext().getRequestDispatcher("/homework1.jsp").forward(request, response);// 跳转
     }
 }
