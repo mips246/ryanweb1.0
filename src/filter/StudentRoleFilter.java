@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LoginFilter implements Filter {
+public class StudentRoleFilter implements Filter {
 	
 	@Override
 	public void destroy() {
@@ -27,9 +27,9 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpSession session = ((HttpServletRequest) request).getSession();
-		if (session.getAttribute("userid") == null) {
-			System.out.println("< LoginFilter Redirect To login.jsp >");
-			((HttpServletResponse) response).sendRedirect("/MIPS246/login.jsp");
+		if ("student".equals(session.getAttribute("role"))) {
+			System.out.println("< StudentRoleFilter Redirect To student_main.jsp >");
+			((HttpServletResponse) response).sendRedirect("/MIPS246/student/student_main.jsp");
 			//request.getRequestDispatcher("login.jsp").forward(request, response);
 		} else {
 			chain.doFilter(request, response);

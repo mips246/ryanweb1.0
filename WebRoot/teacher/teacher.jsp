@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="container clearf">
-       	<button>${sessionScope.u_name}</button>
+        <h3>欢迎${sessionScope.u_name}老师！</h3>
         
         
         </div>

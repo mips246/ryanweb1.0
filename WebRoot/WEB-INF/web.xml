@@ -138,7 +138,10 @@
 		<filter-class>filter.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
-	<filter-name>LoginFilter</filter-name>		
+	<filter-name>LoginFilter</filter-name>
+	<url-pattern>/teacher/*</url-pattern>
+	<url-pattern>/student/*</url-pattern>
+	<url-pattern>/admin/*</url-pattern>		
 	<url-pattern>/file1.jsp</url-pattern>
 	<url-pattern>/file2.jsp</url-pattern>
 	<url-pattern>/file3.jsp</url-pattern>
@@ -155,6 +158,35 @@
 	<url-pattern>/study3_2.jsp</url-pattern>
   </filter-mapping>
 
+  <filter>
+	<filter-name>StudentRoleFilter</filter-name>
+		<filter-class>filter.StudentRoleFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>StudentRoleFilter</filter-name>
+	<url-pattern>/teacher/*</url-pattern>
+	<url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+	<filter-name>TeacherRoleFilter</filter-name>
+		<filter-class>filter.TeacherRoleFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>TeacherRoleFilter</filter-name>
+	<url-pattern>/student/*</url-pattern>
+	<url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+	<filter-name>AdminRoleFilter</filter-name>
+		<filter-class>filter.AdminRoleFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>AdminRoleFilter</filter-name>
+	<url-pattern>/student/*</url-pattern>
+	<url-pattern>/teacher/*</url-pattern>
+  </filter-mapping>
 	
   
   <welcome-file-list>
