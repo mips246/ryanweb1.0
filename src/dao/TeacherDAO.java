@@ -3,6 +3,10 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import vo.TeacherUser;
 
 public class TeacherDAO extends BaseDAO{
@@ -61,6 +65,29 @@ public class TeacherDAO extends BaseDAO{
 		}
 		
 		return true;
+	}
+	
+	public static JSONArray getCourseSelectAndStudentNameList(String teacherid, String courseid) throws SQLException, JSONException {
+		JSONArray resultlist = new JSONArray();
+    	String sql = "SELECT courseselect.grade,courseselect.studentid,student.name"
+    			+ " FROM courseselect,student"
+    			+ " where courseselect.teacherid = ? and courseselect.courseid = ? and courseselect.studentid = student.userid;";
+    	openConnection();
+		pstmt = getPStatement(sql);
+		
+		pstmt.setString(1, teacherid);
+		pstmt.setString(2, courseid);
+		ResultSet result = pstmt.executeQuery();
+		while(result.next()){
+			JSONObject obj= new JSONObject ();
+			obj.put("stuid", result.getString("studentid"));
+			obj.put("name", result.getString("name"));
+			obj.put("grade", result.getInt("grade"));
+			resultlist.put(obj);
+		}
+		result.close();
+		closeConnect();
+		return resultlist;
 	}
 	
 }

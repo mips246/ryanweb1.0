@@ -12,58 +12,69 @@
     <title>教师主页</title>
     
     <script type="text/javascript">
+		function getUrlParams(name){
+     		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     		var r = window.location.search.substr(1).match(reg);
+     		//if(r!=null) return unescape(r[2]); 
+     		if(r!=null) return decodeURI(r[2]);
+     		return null;
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function validateGrade(){
+        	var flag = true;
+        	$("input[name='gradeText']").each(function(){
+        		var val = $(this).val();
+                var stuid = $(this).attr("stuid");
+                var reg = new RegExp(/^(?:[1-9]?\d|100)$/);
+                if(!reg.test(val)){
+               	 	alert(stuid + "成绩不合法！");
+               		flag=false;
+            		return flag;
+                }
+        	});
+        	return flag;
+        }
+	</script>
+	
+	<script type="text/javascript">
         function loadInfoTable(){
         	var teacherid = '<%=session.getAttribute("userid")%>';
+        	var courseid = getUrlParams("courseid");
             $.ajax({
-                url:"/MIPS246/AdminTeacherCourseServlet",
+                url:"/MIPS246/TeacherServlet",
                 type:"POST",
                 data:{
-                    method:"selectTheTeacherCourse",
-                    teacherid:teacherid
+                    method:"selectCourseSelectAndStudentName",
+                    teacherid:teacherid,
+                    courseid:courseid
                 },
                 dataType:"json",
                 success:function(data){
                     $.each(data, function (index) {
-                        var courseid = data[index].courseid;
-                        var coursename = data[index].coursename;
+                    	var stuid = data[index].stuid;
+                        var studentname = data[index].name;
+                        var grade = data[index].grade;
+                        
+                        var str = (grade!=0?"disabled='disabled'":" ");
 
                         tt = "<tr>"
-                            +"<td>"+courseid+"</td>"
-                            +"<td>"+coursename+"</td>"
-                            +'<td><button onclick="manageCourse(\''+courseid+'\')">管理课程</button></td>'
-                            +'<td><button onclick="manageStudent(\''+courseid+'\')">管理学生</button></td>'
+                        	+"<td>"+stuid+"</td>"
+                            +"<td>"+studentname+"</td>"
+                            +"<td><input style='width:60px;margin:0 auto;padding:2px' name='gradeText' stuid='"+stuid+"' "+str+" type='number' value='"+grade+"' ></td>"
                             +"</tr>";
-                        $("#insertPlace").append(tt);
+                        $("#studentList").append(tt);
                     });
                 }
             });
         }
     </script>
     
-    <script type="text/javascript">
-    	function manageCourse(courseid){
-    		var url = "teacher_course_manage.jsp?courseid=" + courseid;
-    		window.location.href=url;
-    		//window.open(url);
-    	}
-    </script>
     
-    <script type="text/javascript">
-    	function manageStudent(courseid){
-    		var url = "teacher_student_manage.jsp?courseid=" + courseid;
-    		window.location.href=url;
-    		//window.open(url);
-    	}
-    </script>
     
 </head>
 <body onload="loadInfoTable()">
-<!--教师主页分为3（暂定）个组件，
-组件1首页用来展示教师的个人信息，并且提供修改密码的功能，
-组件2课程管理用来展示课程，并且可以对某个课程上传作业，视频
-组件3学生管理用来展示每个课程的选课学生，然后可以查看该学生该课程的作业，并且为作业打分
-目前我认为实验和理论学习处于同等地位，也就是说，计算机组成原理和计算机组成原理实验是同等地位的不同两个课程。
- -->
     <div class="container clearf">
         <div class="container clearf">
             <div class="top-nav clearf">
@@ -73,34 +84,33 @@
                     </div>
                     <div class="item">
                         <a href="teacher_course.jsp"><button type="button" class="btn btn-primary">课程管理</button></a>
-                    </div>  
+                    </div>
                 </div>
                 <div class="fr">
                 	<div class="item">
                         <a href="updatepw.jsp"><button type="button" class="btn btn-primary">修改密码</button></a>
                     </div>
                     <div class="item">
-                        <a href="../logout.jsp"><button type="button" class="btn btn-primary">退出</button></a>
+                        <a href="teacher_course.jsp"><button type="button" class="btn btn-primary">返回</button></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container clearf">
-
-			<table border="1">
-	            <thead>
-	            <tr>
-	                <th>课程号</th>
-	                <th>课程名</th>
-	                <th>课程管理</th>
-	                <th>学生管理</th>
-	            </tr>
+        
+        	<table border="1">
+        		<thead>
+        			<tr>
+        				<th class="text-center ">学号</th>
+	                    <th class="text-center ">姓名</th>
+	                    <th class="text-center ">成绩</th>
+	                </tr>
 	            </thead>
-	
-	            <tbody id="insertPlace">
-	            </tbody>
-	        </table>
-
+				<tbody id="studentList">
+				</tbody>
+			</table>
+			<button id="gradeSubmit" type="button" onclick="validateGrade()">提交成绩</button>
+        
         </div>
     </div>
 </body>

@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dao.AdminDAO;
 import dao.TeacherDAO;
 
 public class TeacherServlet extends HttpServlet {
@@ -72,6 +74,19 @@ public class TeacherServlet extends HttpServlet {
 				}
 			}
 			out.println(jsonArray);
+		}
+		else if("selectCourseSelectAndStudentName".equals(method)) {
+			System.out.println("< Teacher Load Course Select Table And Student Table >");
+			String teacherid = request.getParameter("teacherid");
+			String courseid = request.getParameter("courseid");
+			
+			try{
+				jsonArray = TeacherDAO.getCourseSelectAndStudentNameList(teacherid, courseid);
+			}catch(SQLException|JSONException e) {
+				e.printStackTrace();
+			}
+			out.println(jsonArray);
+			
 		}
 		out.close();
 	}
