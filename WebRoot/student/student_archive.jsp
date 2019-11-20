@@ -57,7 +57,7 @@
                 var fileurl=data[index].fileurl;
                 var filename=data[index].filename;
                 var tt="<tr>"
-                +"<td><a herf=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td></tr>";
+                +"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td></tr>";
             })
         }
     </script>

@@ -22,11 +22,11 @@
 	</script>
 	
 	<script type="text/javascript">
-		function validateGrade(stuid,grade){
+		function validateGrade(grade){
         	var flag = true;
             var reg = new RegExp(/^(?:[1-9]?\d|100)$/);
             if(!reg.test(grade)){
-            	alert(stuid + "成绩不合法！");
+            	alert("成绩不合法！");
                 flag=false;
             	return flag;
             }
@@ -36,34 +36,41 @@
 	
 	<script type="text/javascript">
         function loadInfoTable(){
-        	var teacherid = '<%=session.getAttribute("userid")%>';
         	var courseid = getUrlParams("courseid");
+        	var studentid = getUrlParams("studentid");
             $.ajax({
                 url:"/MIPS246/TeacherServlet",
                 type:"POST",
                 data:{
-                    method:"selectCourseSelectAndStudentName",
-                    teacherid:teacherid,
+                    method:"selectStudentHomeworkList",
+                    studentid:studentid,
                     courseid:courseid
                 },
                 dataType:"json",
                 success:function(data){
+                	var no = 0;
                     $.each(data, function (index) {
-                    	var stuid = data[index].stuid;
-                        var studentname = data[index].name;
+                    	
+                    	var fileurl=data[index].fileurl;
+                		var filename=data[index].filename;
+                    	var coursesection = data[index].coursesection;
+                        var createtime = data[index].createtime;
                         var grade = data[index].grade;
                         
                         var str = (grade!=0?"disabled='disabled'":" ");
 
                         tt = "<tr>"
-                        	+"<td>"+stuid+"</td>"
-                            +"<td>"+studentname+"</td>"
-                            //+"<td><input style='width:60px;margin:0 auto;padding:2px' name='gradeText' stuid='"+stuid+"' "+str+" type='number' value='"+grade+"' ></td>"
-                            +"<td><input style='width:60px;margin:0 auto;padding:2px' id='grade"+stuid+"' "+str+" type='number' value='"+grade+"' ></td>"
-                            +'<td><button onclick="updateGrade(\''+stuid+'\')">提交成绩</button></td>'
-                            +'<td><button onclick="jumpToHomework(\''+stuid+'\')">查看作业</button></td>'
+                        	+"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td>"
+                        	+"<td>"+coursesection+"</td>"
+                            +"<td>"+createtime+"</td>"
+                            +"<td><input style='width:60px;margin:0 auto;padding:2px' id='gradeHW"+no+"' "+str+" type='number' value='"+grade+"' ></td>"
+                            //+"<td><input style='width:60px;margin:0 auto;padding:2px' id='"+fileurl+"' "+str+" type='number' value='"+grade+"' ></td>"
+                            //+"<td>"+grade+"</td>"
+                            //+'<td><button onclick="updateHWGrade(\''+fileurl+'\')">提交成绩</button></td>'
+                            +'<td><button onclick="updateHWGrade(\''+filename+'\',\''+no+'\')">提交成绩</button></td>'
                             +"</tr>";
-                        $("#studentList").append(tt);
+                        $("#homeworkList").append(tt);
+                        no += 1;
                     });
                 }
             });
@@ -71,37 +78,28 @@
     </script>
     
     <script type="text/javascript">
-    	function updateGrade(stuid){
-    		var teacherid = '<%=session.getAttribute("userid")%>';
-        	var courseid = getUrlParams("courseid");
-        	var inputid = "#grade" + stuid;
-        	var grade = $(inputid).val();
-        	if(validateGrade(stuid,grade)){
+    	function updateHWGrade(filename,no){
+    		var courseid = getUrlParams("courseid");
+        	var studentid = getUrlParams("studentid");
+        	var grade = $("#gradeHW"+no).val();
+        	if(validateGrade(grade)){
         		$.ajax({
         			url:"/MIPS246/TeacherServlet",
                 	type:"POST",
                 	data:{
-                    	method:"updateGrade",
-                  		teacherid:teacherid,
-                    	courseid:courseid,
-                    	studentid:stuid,
+                    	method:"updateHWGrade",
+                  		filename:filename,
+                  		courseid:courseid,
+                  		studentid:studentid,
                     	grade:grade
                 	},
                 	dataType:"json",
                 	success:function(data){
-                		alert(stuid + "成绩提交成功");
+                		alert("成绩提交成功");
                 		window.location.reload();
                 	}
         		});
         	}
-    	}
-    </script>
-    
-    <script type="text/javascript">
-    	function jumpToHomework(stuid){
-        	var courseid = getUrlParams("courseid");
-        	var url = "teacher_check_homework.jsp?courseid=" + courseid +"&studentid="+ stuid;
-    		window.location.href=url;
     	}
     </script>
     
@@ -124,7 +122,7 @@
                         <a href="updatepw.jsp"><button type="button" class="btn btn-primary">修改密码</button></a>
                     </div>
                     <div class="item">
-                        <a href="teacher_course.jsp"><button type="button" class="btn btn-primary">返回</button></a>
+                        <a href="teacher_student_manage.jsp"><button type="button" class="btn btn-primary">返回</button></a>
                     </div>
                 </div>
             </div>
@@ -134,14 +132,14 @@
         	<table border="1">
         		<thead>
         			<tr>
-        				<th class="text-center ">学号</th>
-	                    <th class="text-center ">姓名</th>
+        				<th class="text-center ">作业</th>
+	                    <th class="text-center ">课程小节</th>
+	                    <th class="text-center ">提交时间</th>
 	                    <th class="text-center ">成绩</th>
 	                    <th class="text-center ">提交成绩</th>
-	                    <th class="text-center ">查看作业</th>
 	                </tr>
 	            </thead>
-				<tbody id="studentList">
+				<tbody id="homeworkList">
 				</tbody>
 			</table>
         

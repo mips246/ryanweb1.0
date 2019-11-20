@@ -56,4 +56,54 @@ public class FileDAO extends BaseDAO{
 		
 		return coursearchivetable;
 	}
+	
+	public static JSONArray teacherGetStudentHW(MyFile file) throws SQLException, JSONException {
+		openConnection();
+
+		String sql="select * from file where courseid = ? and studentid = ? and file_type = ? and teacherid is null;";
+		pstmt=getPStatement(sql);
+		pstmt.setString(1, file.getCourseid());
+		pstmt.setString(2, file.getStudentid());
+		pstmt.setInt(3, file.getFiletype());
+		ResultSet result=pstmt.executeQuery();
+		
+		JSONArray resultlist =new JSONArray();
+		while(result.next()) {
+			 JSONObject obj =new JSONObject();
+			 
+			 obj.append("fileurl", 			result.getString("file_url"));
+			 obj.append("filename", 		result.getString("file_name"));
+			 obj.append("coursesection", 	result.getInt("course_section"));
+			 obj.append("grade", 			result.getInt("grade"));
+			 obj.append("createtime", 		result.getString("create_time"));
+			 
+			 System.out.println("< Get "+ result.getString("file_url") + " >");
+			 resultlist.put(obj);
+		}
+		closeConnect();
+		return resultlist;
+	}
+	
+	public static boolean updateHWGrade(String filename, String courseid, String studentid, int grade){
+		//System.out.println("< Grade: "+ fileurl + " >");
+		//因为file_url中含有“\”，SQL语句无法处理，需要将“\”转义为“\\”，不好处理。
+		//String sql = "UPDATE file SET grade= ? WHERE file_url = ?;";
+		String sql = "UPDATE file SET grade= ? WHERE file_name = ? and studentid = ? and courseid = ? and file_type = 0;";
+		openConnection();
+		pstmt = getPStatement(sql);
+		
+		try {
+			pstmt.setInt(1, grade);
+			pstmt.setString(2, filename);
+			pstmt.setString(3, studentid);
+			pstmt.setString(4, courseid);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {	
+			closeConnect();
+		}
+		
+		return true;
+	}
 }
