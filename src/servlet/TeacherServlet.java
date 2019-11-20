@@ -88,6 +88,38 @@ public class TeacherServlet extends HttpServlet {
 			out.println(jsonArray);
 			
 		}
+		else if("updateGrade".equals(method)) {
+			System.out.println("< Teacher Update Grade >");
+			String teacherid = request.getParameter("teacherid");
+			String courseid = request.getParameter("courseid");
+			String studentid = request.getParameter("studentid");
+			int grade = Integer.parseInt(request.getParameter("grade"));
+			boolean ret = TeacherDAO.updateGrade(teacherid, courseid, studentid, grade);
+			
+			if (ret) {
+				System.out.println("< Teacher Update Grade Success >");
+				try {
+					//jsonObject.append("statusCode", 1);
+					jsonObject.append("message", "success");
+					jsonArray.put(jsonObject);
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}else{
+				System.out.println("< Teacher Update Grade Failed >");
+				try {
+					//jsonObject.append("statusCode", 0);
+					jsonObject.append("message", "failed");
+					jsonArray.put(jsonObject);
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			out.println(jsonArray);
+			
+		}
 		out.close();
 	}
 }

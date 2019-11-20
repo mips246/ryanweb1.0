@@ -62,13 +62,40 @@
                         tt = "<tr>"
                         	+"<td>"+stuid+"</td>"
                             +"<td>"+studentname+"</td>"
-                            +"<td><input style='width:60px;margin:0 auto;padding:2px' name='gradeText' stuid='"+stuid+"' "+str+" type='number' value='"+grade+"' ></td>"
+                            //+"<td><input style='width:60px;margin:0 auto;padding:2px' name='gradeText' stuid='"+stuid+"' "+str+" type='number' value='"+grade+"' ></td>"
+                            +"<td><input style='width:60px;margin:0 auto;padding:2px' id='grade"+stuid+"' "+str+" type='number' value='"+grade+"' ></td>"
+                            +'<td><button onclick="updateGrade(\''+stuid+'\')">提交成绩</button></td>'
                             +"</tr>";
                         $("#studentList").append(tt);
                     });
                 }
             });
         }
+    </script>
+    
+    <script type="text/javascript">
+    	function updateGrade(stuid){
+    		var teacherid = '<%=session.getAttribute("userid")%>';
+        	var courseid = getUrlParams("courseid");
+        	var inputid = "#grade" + stuid;
+        	var grade = $(inputid).val();
+        	$.ajax({
+        		url:"/MIPS246/TeacherServlet",
+                type:"POST",
+                data:{
+                    method:"updateGrade",
+                    teacherid:teacherid,
+                    courseid:courseid,
+                    studentid:stuid,
+                    grade:grade
+                },
+                dataType:"json",
+                success:function(data){
+                	window.location.reload();
+                }
+        	});
+    	}
+    	
     </script>
     
     
@@ -104,12 +131,12 @@
         				<th class="text-center ">学号</th>
 	                    <th class="text-center ">姓名</th>
 	                    <th class="text-center ">成绩</th>
+	                    <th class="text-center ">提交成绩</th>
 	                </tr>
 	            </thead>
 				<tbody id="studentList">
 				</tbody>
 			</table>
-			<button id="gradeSubmit" type="button" onclick="validateGrade()">提交成绩</button>
         
         </div>
     </div>

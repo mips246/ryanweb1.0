@@ -90,4 +90,24 @@ public class TeacherDAO extends BaseDAO{
 		return resultlist;
 	}
 	
+	public static boolean updateGrade(String teacherid, String courseid, String studentid, int grade){
+		String sql = "UPDATE courseselect SET grade= ? WHERE teacherid = ? and courseid = ? and studentid = ?;";
+		openConnection();
+		pstmt = getPStatement(sql);
+		
+		try {
+			pstmt.setInt(1, grade);
+			pstmt.setString(2, teacherid);
+			pstmt.setString(3, courseid);
+			pstmt.setString(4, studentid);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {	
+			closeConnect();
+		}
+		
+		return true;
+	}
+	
 }
