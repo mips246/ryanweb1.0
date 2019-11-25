@@ -50,6 +50,8 @@ public class FileDAO extends BaseDAO{
 			 obj.append("fileurl", result.getString("file_url"));
 			 obj.append("filename", result.getString("file_name"));
 			 obj.append("teacherid", result.getString("teacherid"));
+			 obj.append("section", result.getInt("course_section"));
+			 obj.append("courseid",result.getString("courseid"));
 			 System.out.println(result.getString("file_url"));
 			 coursearchivetable.put(obj);
 		}

@@ -54,15 +54,24 @@
                 }
             });
         }
+        //'<td><button onclick="seeHomework(\''+courseid+'\',\''+teacherid+'\')">'+coursename+'</button></td></tr>';
         function dealData(data) {
             $("#insertPlace2").html("");
+            var url=
             $.each(data,function (index) {
                 var fileurl=data[index].fileurl;
                 var filename=data[index].filename;
+                var section=data[index].section;
+                var courseid=data[index].courseid;
+                var userid='<%=session.getAttribute("userid")%>';
                 var tt="<tr>"
-                +"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td></tr>";
+                +"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td>"
+                +'<td><button onclick="openuploadpage(\''+section+'\',\''+courseid+'\',\''+userid+'\')">上传</button></td></tr>';
                 $("#insertPlace2").append(tt);
             })
+        }
+        function openuploadpage(section,courseid,userid){
+        	window.open("uploadhomework.jsp?courseid="+courseid+"&section="+section+"&userid="+userid,"width=400,height=300");
         }
         //$(document).ready(loadSelectedCourseTable());
     </script>
@@ -113,6 +122,7 @@
                 <thead>
                 <tr>
                     <th>作业列表</th>
+                    <th>上传作业</th>
                 </tr>
                 </thead>
                 <tbody id="insertPlace2">

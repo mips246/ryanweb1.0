@@ -53,9 +53,9 @@ public class DownloadServlet extends HttpServlet {
 			file.setCourseid(courseid);
 			file.setTeacherid(teacherid);
 			file.setFiletype(0);
-			JSONArray coursearchivetable=new JSONArray();
+			JSONArray coursehomeworktable=new JSONArray();
 			try {
-				coursearchivetable=FileDAO.getCourseArchiveTable(file);
+				coursehomeworktable=FileDAO.getCourseArchiveTable(file);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -64,6 +64,21 @@ public class DownloadServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			//System.out.println(coursearchivetable);
+			out.println(coursehomeworktable);
+		}
+		else if(method.equals("loadArchiveTable")){
+			System.out.println("开始提取课程资料");
+			MyFile file=new MyFile();
+			file.setCourseid(courseid);
+			file.setTeacherid(teacherid);
+			file.setFiletype(3);
+			JSONArray coursearchivetable=new JSONArray();
+			try {
+				coursearchivetable=FileDAO.getCourseArchiveTable(file);
+			} catch (SQLException | JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			out.println(coursearchivetable);
 		}
 	}

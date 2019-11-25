@@ -13,11 +13,13 @@
     <script>
         $(document).ready(loadCourseTable());
         function loadCourseTable() {
+        	var userid='<%=session.getAttribute("userid")%>';
             $.ajax({
                 url:"/MIPS246/StudentServlet",
                 type:"POST",
                 data:{
-                    method:"loadSelectedCourse"
+                    method:"x",
+                    userid:userid
                 },
                 dataType:"json",
                 success:function (data) {
@@ -39,7 +41,7 @@
                 type:"POST",
                 dataType: "json",
                 data:{
-                    method: "loadFileTable",
+                    method: "loadArchiveTable",
                     courseid:courseid,
                     teacherid:teacherid
                 },
@@ -58,11 +60,12 @@
                 var filename=data[index].filename;
                 var tt="<tr>"
                 +"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td></tr>";
+                $("#insertPlace2").append(tt);
             })
         }
     </script>
 </head>
-<body>
+<body onload="loadCourseTable()">
 <div class="container clearf">
     <div class="top-nav clearf">
         <div class="fl">
@@ -103,7 +106,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-8">
+        <div class="col-4">
             <table>
                 <thead>
                 <tr>

@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//WebRoot/admin/admin.jsp=UTF-8
 encoding//WebRoot/admin/admin_course.jsp=UTF-8
+encoding//WebRoot/student/uploadhomework.jsp=UTF-8
 encoding//WebRoot/\u6570\u636E\u5E93.sql=UTF-8
 encoding//src/servlet/AdminCourseServlet.java=UTF-8
 encoding/README.md=UTF-8
