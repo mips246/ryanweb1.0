@@ -79,6 +79,7 @@
 
     <script type="text/javascript">
         function InsertTeacher(tid,tname,tpassword,tdescription){
+        	var msg=["老师添加失败，您输入的职工号为空", "老师添加失败，您输入的职工号已存在", "老师添加成功"];
             $.ajax({
                 url:"/MIPS246/AdminTeacherServlet",
                 type:"POST",
@@ -90,8 +91,9 @@
                     password:tpassword,
                     description:tdescription
                 },
-                success:function(){
-                    alert("成功添加！");
+                success:function(data){
+                	var statusCode = data[0].statusCode; 
+                    alert(msg[statusCode]);
                     window.location.reload();
                 },
                 error:function(){

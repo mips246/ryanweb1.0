@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -108,6 +110,41 @@ public class TeacherDAO extends BaseDAO{
 		}
 		
 		return true;
+	}
+	
+	public static JSONArray getCourseListIsSelected(String teacherid) throws SQLException, JSONException {
+		JSONArray courselist=new JSONArray();
+		openConnection();
+		
+		String teachercoursesql="select courseid from courseteacher where teacherid = ?;";
+		pstmt = getPStatement(teachercoursesql);
+        pstmt.setString(1, teacherid);
+        ResultSet checkresult = pstmt.executeQuery();
+        List<String> selectedcourseid =new ArrayList<String>();//存储该老师已选课程id
+        while(checkresult.next()){
+        	selectedcourseid.add(checkresult.getString("courseid"));
+		}
+        checkresult.close();
+        
+        
+		String coursesql="select * from course;";
+		pstmt=getPStatement(coursesql);
+		ResultSet result=pstmt.executeQuery();
+		while(result.next()) {
+			JSONObject obj=new JSONObject();
+			obj.append("courseid", result.getString("courseid"));
+			obj.append("coursename", result.getString("coursename"));
+			obj.append("studentcount", result.getInt("studentcount"));
+			obj.append("createtime", result.getString("createtime"));
+			
+			if(selectedcourseid.indexOf(result.getString("courseid"))==-1){//课程未选
+				obj.append("c_isselected", 0);
+			}
+			else obj.append("c_isselected", 1);
+			
+			courselist.put(obj);
+		}
+		return courselist;
 	}
 	
 }

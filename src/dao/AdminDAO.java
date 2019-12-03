@@ -42,30 +42,43 @@ public class AdminDAO extends BaseDAO{
 		}
 		return false;
 	}
-	public static boolean insert(TeacherUser u) {
+	public static int insert(TeacherUser u) throws SQLException {
 		if(u.getUserid()==null) {
-			return false;
+			return 0;
 		}
 		openConnection();
-		String sql = "INSERT INTO teacher values(?, ?, ?, ?); ";
-		pstmt = getPStatement(sql);
-		String pwd = u.getPassword();
-		if (pwd.isEmpty()) {
-			pwd = Info.DefaultPassword;
-		}
-        try {
-        	pstmt.setString(1,u.getUserid());  
-			pstmt.setString(2,u.getName());
-			pstmt.setString(3, pwd);
-			pstmt.setString(4, u.getDescription());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+		
+		//检查是否存在该id的老师
+		String checksql = "SELECT * FROM teacher WHERE teacherid=?;";
+		pstmt = getPStatement(checksql);
+        pstmt.setString(1,u.getUserid());  
+        ResultSet checkresult = pstmt.executeQuery();
+		
+        if(checkresult.next()){
+			checkresult.close();
 			closeConnect();
+			return 1;
 		}
-		return true;
+        //不存在该id则执行插入
+        else {
+        	String sql = "INSERT INTO teacher values(?, ?, ?, ?); ";
+    		pstmt = getPStatement(sql);
+    		String pwd = u.getPassword();
+    		if (pwd.isEmpty()) {
+    			pwd = Info.DefaultPassword;
+    		}
+
+            pstmt.setString(1,u.getUserid());  
+    		pstmt.setString(2,u.getName());
+    		pstmt.setString(3, pwd);
+    		pstmt.setString(4, u.getDescription());
+    		pstmt.executeUpdate();
+  
+    		closeConnect();
+    		return 2;
+        }
 	}
+	
 	public static boolean insert(Course c) {
 		if(c.getCourseid()==null) {
 			return false;

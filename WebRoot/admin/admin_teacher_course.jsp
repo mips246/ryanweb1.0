@@ -19,12 +19,14 @@
 	
 	<script type="text/javascript">
 		function loadCourseTable() {
+			var teacherid = getUrlParams("teacherid");
             $.ajax({
                 url:"/MIPS246/AdminTeacherCourseServlet",
                 type:"POST",
                 dataType:"json",
                 data:{
-                    method:"loadCourse"
+                    method:"loadCourse",
+                    teacherid:teacherid
                 },
                 success:function (data) {
                     dealData(data);
@@ -48,12 +50,17 @@
                 var coursename=data[index].coursename;
                 var studentcount=data[index].studentcount;
                 var createtime=data[index].createtime;
+                var c_isselected=data[index].c_isselected;
+                var str0 = '<td><button onclick="teacherSelectCourse(\''+courseid+'\',\''+coursename+'\')">选课</button></td>';
+                var str1 = "<td><button disabled='disabled'>已选</button></td>";
+                var str = c_isselected==0 ? str0 : str1;
                 tt="<tr class=''>"
                     +"<td class=''>"+courseid+"</td>"
                     +"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+studentcount+"</td>"
                     +"<td class=''>"+createtime+"</td>"
-                    +'<td><button onclick="teacherSelectCourse(\''+courseid+'\',\''+coursename+'\')">选课</button></td>'
+                    +str
+                    //+'<td><button onclick="teacherSelectCourse(\''+courseid+'\',\''+coursename+'\')">选课</button></td>'
                     +"</tr>";
                 $("#courseInsertPlace").append(tt);
             })

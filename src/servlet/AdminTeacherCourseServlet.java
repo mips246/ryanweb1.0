@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import dao.AdminDAO;
 import dao.AdminTeacherCourseDAO;
+import dao.TeacherDAO;
 import vo.CourseTeacher;
 
 public class AdminTeacherCourseServlet extends HttpServlet {
@@ -39,6 +40,7 @@ public class AdminTeacherCourseServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		JSONArray jsonArray = new JSONArray();
@@ -79,8 +81,9 @@ public class AdminTeacherCourseServlet extends HttpServlet {
 		
 		else if("loadCourse".equals(method)) {
 			System.out.println("< Addmin Teacher Load All Course Table >");
+			String teacherid = request.getParameter("teacherid");
 			try{
-				jsonArray = AdminDAO.getCourseList();
+				jsonArray = TeacherDAO.getCourseListIsSelected(teacherid);
 			}catch(SQLException|JSONException e) {
 				e.printStackTrace();
 			}

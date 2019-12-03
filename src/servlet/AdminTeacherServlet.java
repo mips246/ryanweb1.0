@@ -81,21 +81,26 @@ public class AdminTeacherServlet extends HttpServlet {
 			u.setPassword(password);
 			u.setDescription(description);
 			
-			if(AdminDAO.insert(u)) {
-				System.out.println("< Addmin Insert Teacher Successful >");
-				try {
-					jsonObject.append("message", "Successful");
-					jsonArray.put(jsonObject);
-					out.println(jsonArray);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			try {
+				int statusCode = AdminDAO.insert(u);
+				
+				jsonObject.append("statusCode", statusCode);
+				jsonArray.put(jsonObject);
+				out.println(jsonArray);
+				
+				if(statusCode == 2) {
+					System.out.println("< Addmin Insert Teacher Successful >");
+				}
+				else {
+					System.out.println("< Addmin Insert Teacher Failed >");
 				}
 				
+			} catch (JSONException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else {
-				System.out.println("< Addmin Insert Teacher Failed >");
-			}
+			
+			
         	
 		}
 		
