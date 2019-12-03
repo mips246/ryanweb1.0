@@ -125,12 +125,16 @@ public class TeacherServlet extends HttpServlet {
 		}
 		else if("updateHWGrade".equals(method)) {
 			System.out.println("< Teacher Update Homework Grade >");
+			/*
 			String filename = request.getParameter("filename");
 			String courseid = request.getParameter("courseid");
 			String studentid = request.getParameter("studentid");
+			*/
+			int fileno = Integer.parseInt(request.getParameter("fileno"));
 			int grade = Integer.parseInt(request.getParameter("grade"));
 			
-			boolean ret = FileDAO.updateHWGrade(filename, courseid, studentid, grade);
+			//boolean ret = FileDAO.updateHWGrade(filename, courseid, studentid, grade);
+			boolean ret = FileDAO.updateHWGrade(fileno, grade);
 			
 			if (ret) {
 				System.out.println("< Teacher Update Homework Grade Success >");

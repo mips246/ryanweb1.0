@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2019-11-07 22:26:55
+Date: 2019-12-03 18:19:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,11 +27,6 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of admin
--- ----------------------------
-INSERT INTO `admin` VALUES ('admin', 'administrator', 'admin');
-
--- ----------------------------
 -- Table structure for course
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
@@ -45,29 +40,21 @@ CREATE TABLE `course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of course
--- ----------------------------
-INSERT INTO `course` VALUES ('CS000001', '计算机系统', '0', '2019-11-5');
-INSERT INTO `course` VALUES ('CS111111', 'math', '0', '2019-11-6');
-INSERT INTO `course` VALUES ('CS123456', '数字逻辑电路', '0', '2019-11-5');
-
--- ----------------------------
 -- Table structure for courseselect
 -- ----------------------------
 DROP TABLE IF EXISTS `courseselect`;
 CREATE TABLE `courseselect` (
   `courseid` varchar(40) NOT NULL,
   `studentid` varchar(40) NOT NULL,
-  `grade` int(11) NOT NULL,
-  PRIMARY KEY (`courseid`,`studentid`),
+  `grade` int(11) DEFAULT NULL,
+  `teacherid` varchar(40) NOT NULL,
+  PRIMARY KEY (`courseid`,`studentid`,`teacherid`),
   KEY `studentid` (`studentid`),
+  KEY `teacher_id` (`teacherid`),
   CONSTRAINT `cn` FOREIGN KEY (`courseid`) REFERENCES `course` (`courseid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `studentid` FOREIGN KEY (`studentid`) REFERENCES `student` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `studentid` FOREIGN KEY (`studentid`) REFERENCES `student` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `teacher_id` FOREIGN KEY (`teacherid`) REFERENCES `teacher` (`teacherid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of courseselect
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for courseteacher
@@ -89,14 +76,11 @@ CREATE TABLE `courseteacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of courseteacher
--- ----------------------------
-
--- ----------------------------
 -- Table structure for file
 -- ----------------------------
 DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file` (
+  `file_no` int(11) NOT NULL AUTO_INCREMENT,
   `file_url` varchar(100) NOT NULL,
   `studentid` varchar(40) DEFAULT NULL,
   `courseid` varchar(40) DEFAULT NULL,
@@ -106,12 +90,8 @@ CREATE TABLE `file` (
   `course_section` int(3) DEFAULT NULL,
   `create_time` varchar(40) DEFAULT NULL,
   `file_name` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`file_url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of file
--- ----------------------------
+  PRIMARY KEY (`file_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for student
@@ -125,12 +105,6 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of student
--- ----------------------------
-INSERT INTO `student` VALUES ('1933035', '王睿晗', '142857');
-INSERT INTO `student` VALUES ('admin', 'administrator', 'admin');
-
--- ----------------------------
 -- Table structure for teacher
 -- ----------------------------
 DROP TABLE IF EXISTS `teacher`;
@@ -142,9 +116,3 @@ CREATE TABLE `teacher` (
   PRIMARY KEY (`teacherid`),
   KEY `teachername` (`teachername`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of teacher
--- ----------------------------
-INSERT INTO `teacher` VALUES ('123456', 'Tom', '123456', 'description');
-INSERT INTO `teacher` VALUES ('1930779', '任成琨', '123456', '学生');

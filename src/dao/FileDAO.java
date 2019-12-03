@@ -73,6 +73,7 @@ public class FileDAO extends BaseDAO{
 		while(result.next()) {
 			 JSONObject obj =new JSONObject();
 			 
+			 obj.append("fileno", 			result.getInt("file_no"));
 			 obj.append("fileurl", 			result.getString("file_url"));
 			 obj.append("filename", 		result.getString("file_name"));
 			 obj.append("coursesection", 	result.getInt("course_section"));
@@ -86,6 +87,26 @@ public class FileDAO extends BaseDAO{
 		return resultlist;
 	}
 	
+	public static boolean updateHWGrade(int fileno, int grade){
+
+		String sql = "UPDATE file SET grade= ? WHERE file_no = ?;";
+		openConnection();
+		pstmt = getPStatement(sql);
+		
+		try {
+			pstmt.setInt(1, grade);
+			pstmt.setInt(2, fileno);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {	
+			closeConnect();
+		}
+		
+		return true;
+	}
+	
+	/*
 	public static boolean updateHWGrade(String filename, String courseid, String studentid, int grade){
 		//System.out.println("< Grade: "+ fileurl + " >");
 		//因为file_url中含有“\”，SQL语句无法处理，需要将“\”转义为“\\”，不好处理。
@@ -108,4 +129,6 @@ public class FileDAO extends BaseDAO{
 		
 		return true;
 	}
+	*/
+	
 }

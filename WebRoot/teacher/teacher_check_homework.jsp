@@ -48,9 +48,10 @@
                 },
                 dataType:"json",
                 success:function(data){
-                	var no = 0;
+                	//var no = 0;
                     $.each(data, function (index) {
                     	
+                    	var fileno = data[index].fileno;
                     	var fileurl=data[index].fileurl;
                 		var filename=data[index].filename;
                     	var coursesection = data[index].coursesection;
@@ -63,14 +64,14 @@
                         	+"<td><a href=\'"+fileurl+"\' download=\'"+filename+"\'>"+filename+"</a></td>"
                         	+"<td>"+coursesection+"</td>"
                             +"<td>"+createtime+"</td>"
-                            +"<td><input style='width:60px;margin:0 auto;padding:2px' id='gradeHW"+no+"' "+str+" type='number' value='"+grade+"' ></td>"
+                            +"<td><input style='width:60px;margin:0 auto;padding:2px' id='gradeHW"+fileno+"' "+str+" type='number' value='"+grade+"' ></td>"
                             //+"<td><input style='width:60px;margin:0 auto;padding:2px' id='"+fileurl+"' "+str+" type='number' value='"+grade+"' ></td>"
                             //+"<td>"+grade+"</td>"
-                            //+'<td><button onclick="updateHWGrade(\''+fileurl+'\')">提交成绩</button></td>'
-                            +'<td><button onclick="updateHWGrade(\''+filename+'\',\''+no+'\')">提交成绩</button></td>'
+                            +'<td><button onclick="updateHWGrade(\''+fileno+'\')">提交成绩</button></td>'
+                            //+'<td><button onclick="updateHWGrade(\''+filename+'\',\''+no+'\')">提交成绩</button></td>'
                             +"</tr>";
                         $("#homeworkList").append(tt);
-                        no += 1;
+                        //no += 1;
                     });
                 }
             });
@@ -78,6 +79,8 @@
     </script>
     
     <script type="text/javascript">
+    /*
+     *	这是没改数据库之前的写法
     	function updateHWGrade(filename,no){
     		var courseid = getUrlParams("courseid");
         	var studentid = getUrlParams("studentid");
@@ -91,6 +94,26 @@
                   		filename:filename,
                   		courseid:courseid,
                   		studentid:studentid,
+                    	grade:grade
+                	},
+                	dataType:"json",
+                	success:function(data){
+                		alert("成绩提交成功");
+                		window.location.reload();
+                	}
+        		});
+        	}
+    	}
+    */
+    function updateHWGrade(fileno){
+        	var grade = $("#gradeHW"+fileno).val();
+        	if(validateGrade(grade)){
+        		$.ajax({
+        			url:"/MIPS246/TeacherServlet",
+                	type:"POST",
+                	data:{
+                    	method:"updateHWGrade",
+                  		fileno:fileno,
                     	grade:grade
                 	},
                 	dataType:"json",
