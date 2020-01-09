@@ -11,7 +11,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Title</title>
     <script>
-        $(document).ready(loadCourseTable());
+        //$(document).ready(loadCourseTable());
         function loadCourseTable() {
         	var userid='<%=session.getAttribute("userid")%>';
             $.ajax({

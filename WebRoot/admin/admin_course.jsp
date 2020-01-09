@@ -37,8 +37,8 @@
         function getTime(){
             var time=new Date();
             var year=time.getFullYear();
-            var month=time.getMonth();
-            var day=time.getDay();
+            var month=time.getMonth()+1;
+            var day=time.getDate();
             var hour=time.getHours();
             return year+"-"+month+"-"+day+"-"+hour;
         }
@@ -99,7 +99,8 @@
                     +"<td class=''>"+coursename+"</td>"
                     +"<td class=''>"+studentcount+"</td>"
                     +"<td class=''>"+createtime+"</td>"
-                    +"<td class=''><button onclick='deleteCourse("+courseid+")'>删除</button></td></tr>";
+                    //+"<td class=''><button onclick='deleteCourse("+courseid+")'>删除</button></td></tr>";
+                    +'<td class=""><button onclick="deleteCourse(\''+courseid+'\')">删除</button></td></tr>';
                 $("#insertPlace").append(tt);
             })
         }
